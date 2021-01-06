@@ -1,3 +1,4 @@
 from django.contrib import admin
+from subreddit.models import Subreddit
 
-# Register your models here.
+admin.site.register(Subreddit)

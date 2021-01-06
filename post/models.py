@@ -1,6 +1,6 @@
 from django.db import models
-from user import User
-from subreddit import Subreddit
+from user.models import User
+from subreddit.models import Subreddit
 from django.utils import timezone
 
 class Post(models.Model):
