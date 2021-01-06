@@ -29,8 +29,8 @@ class Post(models.Model):
         default=timezone.now,
         auto_now_add=False
     )
-    up_vote = models.IntegerField(default=0)
-    down_vote = models.IntegerField(default=0)
+    up_vote = models.ManyToManyField(User)
+    down_vote = models.ManyToManyField(User)
     subreddit = models.ForeignKey(
         Subreddit, on_delete=models.CASCADE
     )
