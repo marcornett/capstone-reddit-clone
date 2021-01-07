@@ -1,5 +1,5 @@
 from django.db import models
-from user.models import RedditUser
+from reddituser.models import RedditUser
 from django.utils import timezone
 
 

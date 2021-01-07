@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'notifications',
     'post',
     'subreddit',
-    'user'
+    'reddituser'
 ]
 
 MIDDLEWARE = [
@@ -129,4 +129,4 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-AUTH_USER_MODEL = 'user.RedditUser'
+AUTH_USER_MODEL = 'reddituser.RedditUser'
