@@ -1,5 +1,8 @@
 from django.db import models
-from user.models import User
+from reddituser.models import RedditUser
+from django.utils import timezone
+
+
 class Subreddit(models.Model):
     title = models.CharField(
         max_length=50,
@@ -15,7 +18,7 @@ class Subreddit(models.Model):
         default=timezone.now,
         auto_now_add=False
     )
-    members = models.ManyToManyField(User)
+    members = models.ManyToManyField(RedditUser)
 
     def __str__(self):
         return self.title
