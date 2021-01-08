@@ -10,7 +10,7 @@ class Subreddit(models.Model):
         null=False,
     )
     about = models.CharField(
-        max_length=50,
+        max_length=100,
         blank=False,
         null=False
     )
