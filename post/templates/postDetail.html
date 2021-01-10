@@ -1,5 +1,8 @@
 <h1>{{ post.title }}</h1>
+<h3>by {{ post.user }}</h3>
 <hr>
+
+<!-- Checks for type of post and displays it -->
 {% if post.post %}
     <p>{{ post.post }}</p>
 {% elif post.link %}
@@ -7,3 +10,17 @@
 {% elif post.image %}
     <img src='{{post.image.url}}'>
 {% endif %}
+<hr>
+
+<h2> Comments </h2>
+<hr>
+{% for comment in comments %}
+    <h3>{{ comment.user }}</h3>
+    <p>{{ comment.message }}</p>
+    <hr>
+{% endfor %}
+<form method='post' action='/posts/addcomment/{{post.id}}/' enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type='submit' value='Add Comment'>
+</form>
