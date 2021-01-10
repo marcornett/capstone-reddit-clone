@@ -1,0 +1,9 @@
+<h1>{{ post.title }}</h1>
+<hr>
+{% if post.post %}
+    <p>{{ post.post }}</p>
+{% elif post.link %}
+    <a href='{{post.link}}'>{{ post.link }}</a>
+{% elif post.image %}
+    <img src='{{post.image.url}}'>
+{% endif %}

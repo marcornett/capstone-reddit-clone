@@ -1,10 +1,12 @@
 from django.shortcuts import render
 from django.views import View
+from django.contrib.auth.decorators import login_required
 
 from post.forms import CreateComment, CreateImagePost, CreateLinkPost, CreateMessagePost
 from post.models import Post
 from post.helper import newPost
 
+@login_required()
 def createPost(request, postType):
     form = None
 
@@ -27,3 +29,9 @@ def createPost(request, postType):
         form = CreateImagePost()
 
     return render(request, 'genericForm.html', {'form':form})
+
+def postDetail(request, post_id):
+    cur_post = Post.objects.get(id=post_id)
+    form = CreateComment()
+
+    return render(request, 'postDetail.html', {'form':form, 'post':cur_post})
