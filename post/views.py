@@ -52,3 +52,9 @@ def addComment(request, post_id):
             HttpResponseRedirect(reverse('post_detail', kwargs={'post_id':post_id}))
 
     return HttpResponseRedirect(reverse('post_detail', kwargs={'post_id':post_id}))
+
+@login_required()
+def postLast(request):
+    posts = Post.objects.all().order_by('-created_at')
+    return render(request, 'postDetail.html', {'posts':posts})
+
