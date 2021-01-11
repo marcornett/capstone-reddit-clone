@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from django.views import View
 from subreddit.models import Subreddit
 from post.models import Post
 
