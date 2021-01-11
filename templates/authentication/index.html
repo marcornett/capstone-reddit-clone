@@ -1,4 +1,17 @@
 {% extends 'main.html' %}
 {% block content %}
 <div>index</div>
+
+
+<div>
+    <h3>Communities</h3>
+    <ul>
+        {% for subreddit in subreddits %}
+        <li>
+            <a href="rc/{{ subreddit.title }}">rc/{{ subreddit.title }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+
 {% endblock content %}
