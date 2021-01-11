@@ -3,10 +3,14 @@ from django.contrib.auth import logout, login, authenticate
 from django.views import View
 from authentication.forms import SignUpForm, LoginForm
 from reddituser.models import RedditUser
+from subreddit.models import Subreddit
 
 class IndexView(View):
     def get(self, request):
-        context = {}
+        subreddits = Subreddit.objects.all()
+        context = {
+            'subreddits': subreddits
+        }
         return render(
             request, 'authentication/index.html', context)
 
