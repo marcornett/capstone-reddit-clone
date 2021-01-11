@@ -1,3 +1,25 @@
 from django.db import models
+from reddituser.models import RedditUser
+from django.utils import timezone
 
-# Create your models here.
+
+class Subreddit(models.Model):
+    title = models.CharField(
+        max_length=50,
+        blank=False,
+        null=False,
+    )
+    about = models.CharField(
+        max_length=50,
+        blank=False,
+        null=False
+    )
+    created_at = models.DateTimeField(
+        default=timezone.now,
+        auto_now_add=False
+    )
+    members = models.ManyToManyField(RedditUser)
+
+    def __str__(self):
+        return self.title
+    

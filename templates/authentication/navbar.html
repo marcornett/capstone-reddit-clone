@@ -1,0 +1,29 @@
+{% load static %}
+
+<nav>
+    <ul>
+        <li>logo</li>
+        <li>search</li>
+
+        {% if not request.user.is_authenticated %}
+            <li>
+                <a href="/login">Login</a>
+            </li>
+            <li>
+                <a href="/signup">Sign Up</a>
+            </li>
+        {% endif %}
+
+        <li>user icon</li>
+
+        {% if request.user.is_authenticated %}
+            <li>popular</li>
+            <li>all</li>
+            <li>create post</li>
+            <li>{{request.user.username}}</li>
+            <li>
+                <a href="/logout">Logout</a>
+            </li>
+        {% endif %}
+    </ul>
+</nav>
