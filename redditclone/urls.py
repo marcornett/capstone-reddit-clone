@@ -21,5 +21,6 @@ from post import views as postViews
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('authentication.urls')),
+    path('subreddit/', include('subreddit.urls')),
     path('createpost/<str:postType>/', postViews.createPost, name='create_post'),
 ]
