@@ -1,0 +1,16 @@
+{% extends 'main.html' %}
+{% block content %}
+<div>
+    <h1>{{ subreddit.title }}</h3>
+    <p>About: {{ subreddit.about }}</p>
+    <p>Created at: {{ subreddit.created_at }}</p>
+    <div>
+        <span>{{ members|length }}</span>
+        <br/>
+        <span>Members</span>
+    </div>
+    {% comment %} {% for post in posts %}
+
+    {% endfor %} {% endcomment %}
+</div>
+{% endblock content %}
