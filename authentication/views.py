@@ -2,7 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import logout, login, authenticate
 from django.views import View
 from authentication.forms import SignUpForm, LoginForm
-from reddituser.models import RedditUser
+from subreddit.models import Subreddit
+
 
 def error_500_view(request):
         return render(request, '500.html')
@@ -12,9 +13,13 @@ def error_404_view(request, exception):
 
 class IndexView(View):
     def get(self, request):
-        context = {}
+        subreddits = Subreddit.objects.all()
+        context = {
+            'subreddits': subreddits
+        }
         return render(
             request, 'authentication/index.html', context)
+
 
 class SignUpView(View):
     def get(self, request):
@@ -25,6 +30,7 @@ class SignUpView(View):
         return render(
             request, 'authentication/signupform.html', context
         )
+
     def post(self, request):
         form = SignUpForm(request.POST)
         if form.is_valid():
@@ -40,6 +46,7 @@ class SignUpView(View):
         context = {'form': form}
         return render(
             request, 'authentication/signupform.html', context)
+
 
 class LoginView(View):
     def get(self, request):

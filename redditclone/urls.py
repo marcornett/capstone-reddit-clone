@@ -15,14 +15,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-
-from post import views as postViews
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('authentication.urls')),
-    path('createpost/<str:postType>/', postViews.createPost, name='create_post'),
+    path('subreddit/', include('subreddit.urls')),
+    path('posts/', include('post.urls')),
 ]
 handler404 = 'authentication.views.error_404_view'
-
 handler500 = 'authentication.views.error_500_view'
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
