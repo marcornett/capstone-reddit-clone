@@ -5,6 +5,12 @@ from authentication.forms import SignUpForm, LoginForm
 from subreddit.models import Subreddit
 
 
+def error_500_view(request):
+        return render(request, '500.html')
+
+def error_404_view(request, exception):
+        return render(request, '404.html')
+
 class IndexView(View):
     def get(self, request):
         subreddits = Subreddit.objects.all()

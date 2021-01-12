@@ -24,4 +24,6 @@ urlpatterns = [
     path('subreddit/', include('subreddit.urls')),
     path('posts/', include('post.urls')),
 ]
+handler404 = 'authentication.views.error_404_view'
+handler500 = 'authentication.views.error_500_view'
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
