@@ -23,3 +23,6 @@ urlpatterns = [
     path('', include('authentication.urls')),
     path('createpost/<str:postType>/', postViews.createPost, name='create_post'),
 ]
+handler404 = 'authentication.views.error_404_view'
+
+handler500 = 'authentication.views.error_500_view'

@@ -26,4 +26,6 @@ def createPost(request, postType):
     elif postType == 'image':
         form = CreateImagePost()
 
-    return render(request, 'genericForm.html', {'form':form})
+    return render(request, 'genericForm.html', {'form': form})
+
+    
