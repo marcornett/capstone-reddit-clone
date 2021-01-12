@@ -18,4 +18,4 @@ class CreateLinkPost(forms.Form):
     subreddit = forms.ModelChoiceField(queryset=Subreddit.objects.all())
 
 class CreateComment(forms.Form):
-    pass
+    message = forms.CharField(max_length=500, widget=forms.Textarea)

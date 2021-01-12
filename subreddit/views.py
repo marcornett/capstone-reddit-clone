@@ -1,3 +1,16 @@
 from django.shortcuts import render
+from subreddit.models import Subreddit
+from post.models import Post
 
-# Create your views here.
+
+def subreddit_view(request, title):
+    subreddit = Subreddit.objects.get(title=title)
+    posts = Post.objects.filter(subreddit=subreddit)
+    members_query = subreddit.members
+    members = members_query.all()
+    context = {
+        'subreddit': subreddit,
+        'members': members,
+        'posts': posts
+        }
+    return render(request, 'subreddit/subreddit.html', context)
