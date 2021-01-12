@@ -27,5 +27,29 @@ def createPost(request, postType):
         form = CreateLinkPost()
     elif postType == 'image':
         form = CreateImagePost()
+    return render(request, 'genericForm.html', {'form':form})
 
-    return render(request, 'genericForm.html', {'form': form})
+  
+def postDetail(request, post_id):
+    cur_post = Post.objects.get(id=post_id)
+    comments = cur_post.comments.all()
+    form = CreateComment()
+
+    return render(request, 'postDetail.html', {'form':form, 'post':cur_post, 'comments': comments})
+
+@login_required()
+def addComment(request, post_id):
+    if request.method == "POST":
+        form = CreateComment(request.POST)
+        cur_post = Post.objects.get(id=post_id)
+        if form.is_valid():
+            data = form.cleaned_data
+            new_comment = PostComment.objects.create(
+                user = request.user,
+                message = data['message'],
+            )
+            cur_post.comments.add(new_comment)
+            HttpResponseRedirect(reverse('post_detail', kwargs={'post_id':post_id}))
+
+    return HttpResponseRedirect(reverse('post_detail', kwargs={'post_id':post_id}))
+  
