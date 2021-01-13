@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponseRedirect, reverse
+from django.shortcuts import render, HttpResponseRedirect, reverse, redirect
 from django.views import View
 from django.contrib.auth.decorators import login_required
 
@@ -27,7 +27,7 @@ def createPost(request, postType):
         form = CreateLinkPost()
     elif postType == 'image':
         form = CreateImagePost()
-    return render(request, 'posts/genericForm.html', {'form':form})
+    return render(request, 'post/createpost.html', {'form':form})
 
   
 def postDetail(request, post_id):
@@ -35,7 +35,7 @@ def postDetail(request, post_id):
     comments = cur_post.comments.all()
     form = CreateComment()
 
-    return render(request, 'posts/postDetail.html', {'form':form, 'post':cur_post, 'comments': comments})
+    return render(request, 'post/postDetail.html', {'form':form, 'post':cur_post, 'comments': comments})
 
 @login_required()
 def addComment(request, post_id):
@@ -52,4 +52,11 @@ def addComment(request, post_id):
             HttpResponseRedirect(reverse('post_detail', kwargs={'post_id':post_id}))
 
     return HttpResponseRedirect(reverse('post_detail', kwargs={'post_id':post_id}))
-  
+
+
+def delete_post_view(request, post_id):
+    title = {}
+    post = Post.objects.get(id=post_id)
+    title['title'] = post.subreddit.title
+    post.delete()
+    return redirect(f"/subreddit/page/{title['title']}")
