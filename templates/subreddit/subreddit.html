@@ -9,8 +9,16 @@
         <br/>
         <span>Members</span>
     </div>
-    {% comment %} {% for post in posts %}
-
-    {% endfor %} {% endcomment %}
+    {% for post in posts %}
+        <h4>by u/{{post.user}}</h4>
+        {% if post.post %}
+            <h2>{{ post.post }}</h2>
+        {% elif post.link %}
+            <h2><a href='{{post.link}}'>{{ post.link }}</a></h2>
+        {% elif post.image %}
+            <img src='{{post.image.url}}'>
+        {% endif %}
+        <hr>
+    {% endfor %}
 </div>
 {% endblock content %}
