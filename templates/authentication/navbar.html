@@ -22,7 +22,12 @@
         {% if request.user.is_authenticated %}
             <li>popular</li>
             <li>all</li>
-            <li><a href='/posts/createpost/message/'>Create post</a></li>
+            <li>
+                <a href='/posts/createpost/message/'>Create Post</a>
+            </li>
+            <li>
+                <a href='/subreddit/create_subreddit'>Create Subreddit</a>
+            </li>
             <li>{{request.user.username}}</li>
             <li>
                 <a href="/logout">Logout</a>
