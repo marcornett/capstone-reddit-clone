@@ -8,11 +8,11 @@ class Command(BaseCommand):
     help = 'Populates database with users'
 
     def handle(self, *args, **options):
-        for i in range(10):
+        for i in range(30):
             Subreddit.objects.create(
                 title=text.word(),
                 about=text.text(),
             )
         self.stdout.write(
-            self.style.SUCCESS('Successfully created 10 subreddits.')
+            self.style.SUCCESS('Successfully created 30 subreddits.')
         )
