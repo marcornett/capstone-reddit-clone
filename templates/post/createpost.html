@@ -4,9 +4,9 @@
         <li><a href="/posts/create_url_post">Create URL Post</a></li>
         <li><a href="/posts/create_image_post">Create Image Post</a></li>
     </ul>
-    <form method='post' enctype="multipart/form-data">
+    <form method='post' action='' enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
-        <input type='submit' value='Add Comment'>
+        <input type='submit' value='Submit!'>
     </form>
 </div>

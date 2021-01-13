@@ -13,10 +13,25 @@
         <h4>by u/{{post.user}}</h4>
         {% if post.post %}
             <h2>{{ post.post }}</h2>
+            {% if request.user == post.user or request.user.is_staff %}
+                <a href='/posts/delete_post/{{ post.id }}'>
+                    <button>x</button>
+                </a>
+            {% endif %}
         {% elif post.link %}
             <h2><a href='{{post.link}}'>{{ post.link }}</a></h2>
+            {% if request.user == post.user or request.user.is_staff %}
+                <a href='/posts/delete_post/{{ post.id }}'>
+                    <button>x</button>
+                </a>
+            {% endif %}
         {% elif post.image %}
             <img src='{{post.image.url}}'>
+            {% if request.user == post.user or request.user.is_staff %}
+                <a href='/posts/delete_post/{{ post.id }}'>
+                    <button>x</button>
+                </a>
+            {% endif %}
         {% endif %}
         <hr>
     {% endfor %}

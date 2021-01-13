@@ -55,3 +55,7 @@ class Post(models.Model):
         Subreddit, on_delete=models.CASCADE
     )
     comments = models.ManyToManyField(PostComment, related_name="post_comment")
+
+    def __str__(self):
+        return self.title
+    
