@@ -29,7 +29,7 @@ def createPost(request, postType):
         form = CreateImagePost()
     return render(request, 'genericForm.html', {'form':form})
 
-  
+
 def postDetail(request, post_id):
     cur_post = Post.objects.get(id=post_id)
     comments = cur_post.comments.all()
@@ -52,4 +52,12 @@ def addComment(request, post_id):
             HttpResponseRedirect(reverse('post_detail', kwargs={'post_id':post_id}))
 
     return HttpResponseRedirect(reverse('post_detail', kwargs={'post_id':post_id}))
-  
+
+def subreddit_form(request):
+    if request.method == 'POST':
+        form = CreateSubreddit(request.POST)
+        if form.is_valid():
+            val = form.cleaned_data.get("button")
+    else:
+        form = CreateSubreddit()
+    return render(request, 'subredditForm.html', locals())

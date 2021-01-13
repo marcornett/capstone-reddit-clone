@@ -19,3 +19,6 @@ class CreateLinkPost(forms.Form):
 
 class CreateComment(forms.Form):
     message = forms.CharField(max_length=500, widget=forms.Textarea)
+
+class CreateSubreddit(forms.Form):
+    button = forms.CharField(max_length=50)

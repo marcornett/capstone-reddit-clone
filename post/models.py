@@ -55,3 +55,15 @@ class Post(models.Model):
         Subreddit, on_delete=models.CASCADE
     )
     comments = models.ManyToManyField(PostComment, related_name="post_comment")
+
+class CreateSubreddit(models.Model):
+    Title = models.CharField(
+        max_length=50,
+        blank=False,
+        null=True
+    )
+    About = models.CharField(
+        max_length=150,
+        blank=False,
+        null=True
+    )    
