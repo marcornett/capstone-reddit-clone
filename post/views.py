@@ -60,4 +60,4 @@ def subreddit_form(request):
             val = form.cleaned_data.get("button")
     else:
         form = CreateSubreddit()
-    return render(request, 'subredditForm.html', locals())
+    return render(request, 'post/subredditForm.html', locals())
