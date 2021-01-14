@@ -9,7 +9,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         is_active = False
-        for i in range(30):
+        for i in range(1000):
             if i % 3 == 0:
                 is_active = True
             RedditUser.objects.create(
@@ -22,4 +22,5 @@ class Command(BaseCommand):
                 bio=person.occupation()
             )
             is_active = False
-        self.stdout.write(self.style.SUCCESS('Successfully created 30 users.'))
+        self.stdout.write(
+            self.style.SUCCESS('Successfully created 1000 users.'))

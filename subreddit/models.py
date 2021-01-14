@@ -21,5 +21,5 @@ class Subreddit(models.Model):
     members = models.ManyToManyField(RedditUser)
 
     def __str__(self):
-        return self.title
+        return f'{(self.id)} {self.title}'
     
