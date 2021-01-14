@@ -11,15 +11,18 @@ def createPost(request, postType):
     form = None
 
     if request.method == "POST":
+        cur_post = None
         if postType == 'message':
             form = CreateMessagePost(request.POST)
-            newPost(request, form, postType)
+            cur_post = newPost(request, form, postType)
         elif postType == 'link':
             form = CreateLinkPost(request.POST)
-            newPost(request, form, postType)
+            cur_post = newPost(request, form, postType)
         elif postType == 'image':
             form = CreateImagePost(request.POST, request.FILES)
-            newPost(request, form, postType)
+            cur_post = newPost(request, form, postType)
+        if cur_post:
+            return HttpResponseRedirect(reverse('post_detail', kwargs={'post_id':cur_post.id}))
 
     if postType == 'message':
         form = CreateMessagePost()
