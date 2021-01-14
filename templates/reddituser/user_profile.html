@@ -1,0 +1,14 @@
+{% extends 'main.html' %}
+{% block content %}
+<div>
+    <img src="{{ user.image.url }}" alt="Profile Image">
+    <div>uc/{{ user.username }}</div>
+    <div>{{ user.email }}</div>
+    <div>{{ user.bio }}</div>
+    <form method='post' action='' enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type='submit' value='Submit'>
+    </form>
+</div>
+{% endblock content %}

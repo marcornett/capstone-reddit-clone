@@ -28,7 +28,11 @@
             <li>
                 <a href='/subreddit/create_subreddit'>Create Subreddit</a>
             </li>
-            <li>{{request.user.username}}</li>
+            <li>
+                <a href="/user/{{request.user.username}}">
+                    {{request.user.username}}
+                </a>
+            </li>
             <li>
                 <a href="/logout">Logout</a>
             </li>
