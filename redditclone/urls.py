@@ -23,6 +23,7 @@ urlpatterns = [
     path('', include('authentication.urls')),
     path('subreddit/', include('subreddit.urls')),
     path('posts/', include('post.urls')),
+    path('user/', include('reddituser.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 handler404 = 'authentication.views.error_404_view'
 handler500 = 'authentication.views.error_500_view'
