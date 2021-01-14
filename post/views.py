@@ -49,7 +49,7 @@ def addComment(request, post_id):
                 message = data['message'],
             )
             cur_post.comments.add(new_comment)
-            HttpResponseRedirect(reverse('post_detail', kwargs={'post_id':post_id}))
+            return HttpResponseRedirect(reverse('post_detail', kwargs={'post_id':post_id}))
 
     return HttpResponseRedirect(reverse('post_detail', kwargs={'post_id':post_id}))
 
@@ -60,3 +60,39 @@ def delete_post_view(request, post_id):
     title['title'] = post.subreddit.title
     post.delete()
     return redirect(f"/subreddit/page/{title['title']}")
+
+@login_required()
+def dislike_post(request, post_id):
+    cur_post = Post.objects.get(id=post_id)
+
+    cur_post.down_vote.add(request.user)
+    cur_post.up_vote.remove(request.user)
+
+    return HttpResponseRedirect(reverse('post_detail', kwargs={'post_id':post_id}))
+
+@login_required()
+def like_post(request, post_id):
+    cur_post = Post.objects.get(id=post_id)
+
+    cur_post.up_vote.add(request.user)
+    cur_post.down_vote.remove(request.user)
+
+    return HttpResponseRedirect(reverse('post_detail', kwargs={'post_id':post_id}))
+
+@login_required()
+def dislike_comment(request, comment_id, post_id):
+    cur_comment = PostComment.objects.get(id=comment_id)
+
+    cur_comment.down_vote.add(request.user)
+    cur_comment.up_vote.remove(request.user)
+
+    return HttpResponseRedirect(reverse('post_detail', kwargs={'post_id':post_id}))
+
+@login_required()
+def like_comment(request, comment_id, post_id):
+    cur_comment = PostComment.objects.get(id=comment_id)
+
+    cur_comment.up_vote.add(request.user)
+    cur_comment.down_vote.remove(request.user)
+
+    return HttpResponseRedirect(reverse('post_detail', kwargs={'post_id':post_id}))
