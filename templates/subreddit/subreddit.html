@@ -14,8 +14,8 @@
         <h4>by u/{{post.user}}</h4>
         {% if post.post %}
             <h3>Created: {{ post.created_at }}</h3>
-            <h4><a href='/posts/like_comment/{{comment.id}}/{{post.id}}/'>Like</a> {{ post.up_vote.count }}</h4>
-            <h4><a href='/posts/dislike_comment/{{comment.id}}/{{post.id}}/'>Dislike</a> {{ post.down_vote.count }}</h4>
+            <h4><a href='/posts/like_post/{{post.id}}'>Like</a> {{ post.up_vote.count }}</h4>
+            <h4><a href='/posts/dislike_post/{{post.id}}'>Dislike</a> {{ post.down_vote.count }}</h4>
             <h2>{{ post.post }}</h2>
             {% if request.user == post.user or request.user.is_staff %}
                 <a href='/posts/delete_post/{{ post.id }}/{{ sort_by }}'>
@@ -24,8 +24,8 @@
             {% endif %}
         {% elif post.link %}
             <h3>Created: {{ post.created_at }}</h3>
-            <h4><a href='/posts/like_comment/{{comment.id}}/{{post.id}}/'>Like</a> {{ post.up_vote.count }}</h4>
-            <h4><a href='/posts/dislike_comment/{{comment.id}}/{{post.id}}/'>Dislike</a> {{ post.down_vote.count }}</h4>
+            <h4><a href='/posts/like_post/{{post.id}}'>Like</a> {{ post.up_vote.count }}</h4>
+            <h4><a href='/posts/dislike_post/{{post.id}}'>Dislike</a> {{ post.down_vote.count }}</h4>
             <h2><a href='{{post.link}}'>{{ post.link }}</a></h2>
             {% if request.user == post.user or request.user.is_staff %}
                 <a href='/posts/delete_post/{{ post.id }}/{{ sort_by }}'>
@@ -34,8 +34,8 @@
             {% endif %}
         {% elif post.image %}
             <h3>Created: {{ post.created_at }}</h3>
-            <h4><a href='/posts/like_comment/{{comment.id}}/{{post.id}}/'>Like</a> {{ post.up_vote.count }}</h4>
-            <h4><a href='/posts/dislike_comment/{{comment.id}}/{{post.id}}/'>Dislike</a> {{ post.down_vote.count }}</h4>
+            <h4><a href='/posts/like_post/{{post.id}}'>Like</a> {{ post.up_vote.count }}</h4>
+            <h4><a href='/posts/dislike_post/{{post.id}}'>Dislike</a> {{ post.down_vote.count }}</h4>
             <img src='{{post.image.url}}'>
             {% if request.user == post.user or request.user.is_staff %}
                 <a href='/posts/delete_post/{{ post.id }}/{{ sort_by }}'>
