@@ -1,7 +1,9 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponseRedirect, reverse
 from subreddit.models import Subreddit
 from subreddit.forms import SubredditCreationForm
+from subreddit.filters import SubredditFilter
 from post.models import Post
+import random
 
 
 def subreddit_view(request, title, sort_by):
@@ -38,3 +40,21 @@ def subreddit_creation_view(request):
             return redirect(f"/subreddit/page/{data['title']}/recent")
     context = {'form': form, 'title': title}
     return render(request, 'authentication/generic_form.html', context)
+
+
+def subreddit_search_view(request):
+    subreddits = Subreddit.objects.all()
+    subreddit_filter = SubredditFilter(request.GET, queryset=subreddits)
+    subreddits = subreddit_filter.qs[:6]
+    posts = []
+    for subreddit in subreddits:
+        query_set = Post.objects.filter(subreddit=subreddit)
+        for post in query_set:
+            posts.append(post)
+    random.shuffle(posts)
+    context = {
+        'subreddits': subreddits,
+        'subreddit_filter': subreddit_filter,
+        'posts': posts
+        }
+    return render(request, 'subreddit/search.html', context)

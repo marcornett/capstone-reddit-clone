@@ -1,3 +1,5 @@
+{% extends 'main.html' %}
+{% block content %}
 <form action="" method="post">
     {% csrf_token %}
     {{form.username}}
@@ -16,3 +18,4 @@
     form_fields[3].placeholder = "Enter password"
     form_fields[4].placeholder = "Re-enter password"
 </script>
+{% endblock %}

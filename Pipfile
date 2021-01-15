@@ -8,6 +8,7 @@ django = "*"
 django-environ = "*"
 pillow = "*"
 mimesis = "*"
+django-filter = "*"
 
 [dev-packages]
 
