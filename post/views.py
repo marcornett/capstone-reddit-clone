@@ -1,10 +1,11 @@
 from django.shortcuts import render, HttpResponseRedirect, reverse, redirect
 from django.views import View
 from django.contrib.auth.decorators import login_required
-
 from post.forms import CreateComment, CreateImagePost, CreateLinkPost, CreateMessagePost
 from post.models import Post, PostComment
 from post.helper import newPost
+from subreddit.helper import random_subreddits
+
 
 @login_required()
 def createPost(request, postType):
@@ -37,8 +38,14 @@ def postDetail(request, post_id):
     cur_post = Post.objects.get(id=post_id)
     comments = cur_post.comments.all()
     form = CreateComment()
-
-    return render(request, 'post/postDetail.html', {'form':form, 'post':cur_post, 'comments': comments})
+    subreddits = random_subreddits()
+    context = {
+        'form':form,
+        'post':cur_post,
+        'comments': comments,
+        'subreddits': subreddits
+        }
+    return render(request, 'post/postDetail.html', context)
 
 @login_required()
 def addComment(request, post_id):
