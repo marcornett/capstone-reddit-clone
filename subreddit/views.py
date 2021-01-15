@@ -64,3 +64,8 @@ def subscribe(request, subreddit_id):
     current_subreddit = Subreddit.objects.get(id=subreddit_id)
     current_subreddit.members.add(request.user)
     return render(request, 'authentication/index.html', {'subreddit': current_subreddit})
+
+def unsubscribe(request, subreddit_id):
+    current_subreddit = Subreddit.objects.get(id=subreddit_id)
+    current_subreddit.members.remove(request.user)
+    return render(request, 'authentication/index.html', {'subreddit': current_subreddit})
