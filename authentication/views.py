@@ -4,13 +4,16 @@ from django.views import View
 from authentication.forms import SignUpForm, LoginForm
 from subreddit.models import Subreddit
 from subreddit.filters import SubredditFilter
+from django.contrib import messages
 
 
 def error_500_view(request):
-        return render(request, '500.html')
+    return render(request, '500.html')
+
 
 def error_404_view(request, exception):
-        return render(request, '404.html')
+    return render(request, '404.html')
+
 
 class IndexView(View):
     def get(self, request):
@@ -62,14 +65,20 @@ class LoginView(View):
 
     def post(self, request):
         form = LoginForm(request.POST)
+        title = 'Login'
         if form.is_valid():
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
             user = authenticate(
                 request, username=username, password=password)
-            if user:
+            if user is not None:
                 login(request, user)
-            return redirect('index')
+                return redirect('index')
+            else:
+                messages.error(request, 'Username or Password is incorrect.')
+                context = {'form': form, 'title': title}
+                return render(
+                    request, 'authentication/generic_form.html', context)
         context = {'form': form}
         return render(
             request, 'authentication/index.html', context)
