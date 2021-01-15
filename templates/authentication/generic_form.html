@@ -1,6 +1,6 @@
 {% extends 'main.html' %}
 {% block content %}
-{{title}}
+<h2>{{ title }}</h2>
 <form action="" method="post">
     {% csrf_token %}
     {{ form.username }}

@@ -54,7 +54,8 @@ class SignUpView(View):
 class LoginView(View):
     def get(self, request):
         form = LoginForm()
-        context = {'form': form}
+        title = 'Login'
+        context = {'form': form, 'title': title}
         return render(
             request, 'authentication/generic_form.html', context
         )
