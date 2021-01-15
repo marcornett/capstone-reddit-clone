@@ -2,6 +2,11 @@
 {% block content %}
 <div>
     <h1>{{ subreddit.title }}</h3>
+        <a href="{% url 'subscribe_subreddit' subreddit.id %}">
+            <button type="button">Subscribe</button></a>
+        <a href="{% url 'unsubscribe_subreddit' subreddit.id %}">
+            <button type="button">Unsubscribe</button></a>
+            
     <p>About: {{ subreddit.about }}</p>
     <p>Created at: {{ subreddit.created_at }}</p>
     <div>

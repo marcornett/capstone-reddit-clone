@@ -19,7 +19,6 @@ class Subreddit(models.Model):
         auto_now_add=False
     )
     members = models.ManyToManyField(RedditUser)
-
     def __str__(self):
         return f'{(self.id)} {self.title}'
     
