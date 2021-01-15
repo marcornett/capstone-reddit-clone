@@ -3,6 +3,7 @@ from subreddit.models import Subreddit
 from subreddit.forms import SubredditCreationForm
 from subreddit.filters import SubredditFilter
 from post.models import Post
+from subreddit.helper import random_subreddits
 import random
 
 
@@ -17,8 +18,10 @@ def subreddit_view(request, title, sort_by):
         posts = Post.objects.filter(subreddit=subreddit).order_by('created_at').reverse()
     members_query = subreddit.members
     members = members_query.all()
+    subreddits = random_subreddits()
     context = {
         'subreddit': subreddit,
+        'subreddits': subreddits,
         'members': members,
         'posts': posts,
         'sort_by': sort_by,

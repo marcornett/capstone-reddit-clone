@@ -5,6 +5,8 @@ from authentication.forms import SignUpForm, LoginForm
 from subreddit.models import Subreddit
 from subreddit.filters import SubredditFilter
 from django.contrib import messages
+from subreddit.helper import random_subreddits
+import random
 
 
 def error_500_view(request):
@@ -19,12 +21,13 @@ class IndexView(View):
     def get(self, request):
         subreddits = Subreddit.objects.all()
         subreddit_filter = SubredditFilter(request.GET, queryset=subreddits)
+        subreddits = random_subreddits()
         context = {
             'subreddits': subreddits,
             'subreddit_filter': subreddit_filter
         }
         return render(
-            request, 'authentication/index.html', context)
+            request, 'main.html', context)
 
 
 class SignUpView(View):

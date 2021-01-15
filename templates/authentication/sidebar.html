@@ -1,0 +1,13 @@
+{% load static %}
+<div>
+{% if subreddits %}
+    <h3>Communities</h3>
+    <ul>
+        {% for subreddit in subreddits %}
+        <li>
+            <a href="subreddit/page/{{ subreddit.title }}/recent">rc/{{ subreddit.title }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+{% endif %}
+</div>
