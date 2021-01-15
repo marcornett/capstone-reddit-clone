@@ -1,0 +1,17 @@
+{% extends 'main.html' %}
+{% block content %}
+<div>
+    <h2>From your search: </h2>
+    <ul>
+        {% for subreddit in subreddits %}
+        <li>
+            <a href="{% url 'subreddit'  subreddit.title 'recent' %}">rc/{{ subreddit.title }}</a>
+            <div>{{ subreddit.members|length}} Members</div>
+            <div>{{ subreddit.about }}</div>
+            <button>Join</button>
+        </li>
+        {% endfor %}
+    </ul>
+    {% include 'post/post_list.html' %}
+</div>
+{% endblock %}

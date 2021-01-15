@@ -9,8 +9,18 @@
 </head>
 <body>
     {% include 'authentication/navbar.html' %}
-
+    <form action="/subreddit/search/" method="">
+        {% csrf_token %}
+        {{ subreddit_filter.form.title }}
+    </form>
     {% block content %}
     {% endblock content %}
+
+    <script>
+        let searchField = document.getElementById('id_title')
+        if(searchField !== null){
+            searchField.placeholder = "Search"
+        }
+    </script>
 </body>
 </html>

@@ -8,9 +8,30 @@
     </ul>
     <form method='post' action='' enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form.as_p }}
-        <input type='submit' value='Submit!'>
+        {{ form.subreddit.label }}
+        {{ form.subreddit }}
+        {{ form.title }}
+        {{ form.post }}
+        {{ form.link }}
+        {{ form.image }}
+        
+        <input type='submit' value='Post'>
     </form>
+
+    <script>
+        let titleField = document.getElementById('post_input')
+        if(titleField !== null){
+            titleField.placeholder = "Title"
+        }
+        let postField = document.getElementById('id_post')
+        if(postField !== null){
+            postField.placeholder = "Text(required)"
+        }
+        let linkField = document.getElementById('id_link')
+        if(linkField !== null){
+            linkField.placeholder = "Link"
+        }
+    </script>
 </div>
 
 {% endblock content %}

@@ -10,40 +10,6 @@
         <span>Members</span>
     </div>
     <p>Sort by: <a href='/subreddit/page/{{subreddit.title}}/trending'>Trending</a>   <a href='/subreddit/page/{{subreddit.title}}/recent'>Recent</a></p>
-    {% for post in posts %}
-        <h4>by u/{{post.user}}</h4>
-        {% if post.post %}
-            <h3>Created: {{ post.created_at }}</h3>
-            <h4><a href='/posts/like_post/{{post.id}}'>Like</a> {{ post.up_vote.count }}</h4>
-            <h4><a href='/posts/dislike_post/{{post.id}}'>Dislike</a> {{ post.down_vote.count }}</h4>
-            <h2>{{ post.post }}</h2>
-            {% if request.user == post.user or request.user.is_staff %}
-                <a href='/posts/delete_post/{{ post.id }}/{{ sort_by }}'>
-                    <button>x</button>
-                </a>
-            {% endif %}
-        {% elif post.link %}
-            <h3>Created: {{ post.created_at }}</h3>
-            <h4><a href='/posts/like_post/{{post.id}}'>Like</a> {{ post.up_vote.count }}</h4>
-            <h4><a href='/posts/dislike_post/{{post.id}}'>Dislike</a> {{ post.down_vote.count }}</h4>
-            <h2><a href='{{post.link}}'>{{ post.link }}</a></h2>
-            {% if request.user == post.user or request.user.is_staff %}
-                <a href='/posts/delete_post/{{ post.id }}/{{ sort_by }}'>
-                    <button>x</button>
-                </a>
-            {% endif %}
-        {% elif post.image %}
-            <h3>Created: {{ post.created_at }}</h3>
-            <h4><a href='/posts/like_post/{{post.id}}'>Like</a> {{ post.up_vote.count }}</h4>
-            <h4><a href='/posts/dislike_post/{{post.id}}'>Dislike</a> {{ post.down_vote.count }}</h4>
-            <img src='{{post.image.url}}'>
-            {% if request.user == post.user or request.user.is_staff %}
-                <a href='/posts/delete_post/{{ post.id }}/{{ sort_by }}'>
-                    <button>x</button>
-                </a>
-            {% endif %}
-        {% endif %}
-        <hr>
-    {% endfor %}
+    {% include 'post/post_list.html' %}
 </div>
 {% endblock content %}

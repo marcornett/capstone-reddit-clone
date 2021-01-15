@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     'notifications',
     'post',
     'subreddit',
-    'reddituser'
+    'reddituser',
+    'django_filters',
 ]
 
 MIDDLEWARE = [

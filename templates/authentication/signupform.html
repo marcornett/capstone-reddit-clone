@@ -1,3 +1,6 @@
+{% extends 'main.html' %}
+{% block content %}
+<h2>Sign Up</h2>
 <form action="" method="post">
     {% csrf_token %}
     {{form.username}}
@@ -10,9 +13,13 @@
 {{form.errors}}
 
 <script>
-    let form_fields = document.getElementsByTagName('input')
-    form_fields[1].placeholder = "Username"
-    form_fields[2].placeholder = "Email"
-    form_fields[3].placeholder = "Enter password"
-    form_fields[4].placeholder = "Re-enter password"
+    let usernameField = document.getElementById('id_username')
+    usernameField.placeholder = "Username"
+    let emailField = document.getElementById('id_email')
+    emailField.placeholder = "Email"
+    let passwordField1 = document.getElementById('id_password1')
+    passwordField1.placeholder = "Enter password"
+    let passwordField2 = document.getElementById('id_password2')
+    passwordField2.placeholder = "Re-enter password"
 </script>
+{% endblock %}

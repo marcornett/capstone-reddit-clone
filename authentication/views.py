@@ -3,6 +3,7 @@ from django.contrib.auth import logout, login, authenticate
 from django.views import View
 from authentication.forms import SignUpForm, LoginForm
 from subreddit.models import Subreddit
+from subreddit.filters import SubredditFilter
 
 
 def error_500_view(request):
@@ -14,8 +15,10 @@ def error_404_view(request, exception):
 class IndexView(View):
     def get(self, request):
         subreddits = Subreddit.objects.all()
+        subreddit_filter = SubredditFilter(request.GET, queryset=subreddits)
         context = {
-            'subreddits': subreddits
+            'subreddits': subreddits,
+            'subreddit_filter': subreddit_filter
         }
         return render(
             request, 'authentication/index.html', context)
@@ -51,7 +54,8 @@ class SignUpView(View):
 class LoginView(View):
     def get(self, request):
         form = LoginForm()
-        context = {'form': form}
+        title = 'Login'
+        context = {'form': form, 'title': title}
         return render(
             request, 'authentication/generic_form.html', context
         )
