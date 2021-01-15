@@ -1,5 +1,4 @@
 from django.shortcuts import render, HttpResponseRedirect, reverse, redirect
-from django.views import View
 from django.contrib.auth.decorators import login_required
 from post.forms import CreateComment, CreateImagePost, CreateLinkPost, CreateMessagePost
 from post.models import Post, PostComment
@@ -40,8 +39,8 @@ def postDetail(request, post_id):
     form = CreateComment()
     subreddits = random_subreddits()
     context = {
-        'form':form,
-        'post':cur_post,
+        'form': form,
+        'post': cur_post,
         'comments': comments,
         'subreddits': subreddits
         }

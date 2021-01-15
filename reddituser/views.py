@@ -9,7 +9,8 @@ from post.models import Post
 def user_profile_view(request, username):
     user = RedditUser.objects.get(username=username)
     form = UpdateUserForm()
-    posts = Post.objects.filter(user=request.user)
+    posts = Post.objects.filter(
+        user=request.user).order_by("created_at").reverse()
     sort_by = 'recent'
     if request.method == 'POST':
         form = UpdateUserForm(request.POST, request.FILES)
