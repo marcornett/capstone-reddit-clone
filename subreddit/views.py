@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, HttpResponseRedirect, reverse
 from subreddit.models import Subreddit
 from subreddit.forms import SubredditCreationForm
 from subreddit.filters import SubredditFilter
+from reddituser.models import RedditUser
 from post.models import Post
 import random
 
@@ -58,3 +59,8 @@ def subreddit_search_view(request):
         'posts': posts
         }
     return render(request, 'subreddit/search.html', context)
+
+def subscribe(request, subreddit_id):
+    current_subreddit = Subreddit.objects.get(id=subreddit_id)
+    current_subreddit.members.add(request.user)
+    return render(request, 'authentication/index.html', {'subreddit': current_subreddit})
