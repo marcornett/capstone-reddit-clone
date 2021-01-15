@@ -9,12 +9,16 @@
 </head>
 <body>
     {% include 'authentication/navbar.html' %}
+    
+    {% comment %} Search Bar {% endcomment %}
     <form action="/subreddit/search/" method="">
         {% csrf_token %}
         {{ subreddit_filter.form.title }}
     </form>
+
     {% block content %}
     {% endblock content %}
+    {% include 'authentication/sidebar.html' %}
 
     <script>
         let searchField = document.getElementById('id_title')

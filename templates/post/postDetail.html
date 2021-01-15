@@ -1,6 +1,8 @@
 {% extends 'main.html' %}
 {% block content %}
-<h1>{{ post.title }}</h1>
+{% if post.title %}
+    <h1>{{ post.title }}</h1>
+{% endif %}
 <h3>by {{ post.user }}</h3>
 <h4><a href='/posts/like_post/{{post.id}}/'>Like</a></h4>
 <h4><a href='/posts/dislike_post/{{post.id}}/'>Dislike</a></h4>
@@ -13,6 +15,13 @@
     <a href='{{post.link}}'>{{ post.link }}</a>
 {% elif post.image %}
     <img src='{{post.image.url}}'>
+{% endif %}
+
+{% if request.user == post.user or request.user.is_staff %}
+    <form method='post' action='/posts/delete_post/{{ post.id }}/' enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type='submit' value='X'>
+    </form>
 {% endif %}
 <hr>
 

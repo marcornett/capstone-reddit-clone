@@ -1,10 +1,10 @@
 from django.shortcuts import render, HttpResponseRedirect, reverse, redirect
-from django.views import View
 from django.contrib.auth.decorators import login_required
-
 from post.forms import CreateComment, CreateImagePost, CreateLinkPost, CreateMessagePost
 from post.models import Post, PostComment
 from post.helper import newPost
+from subreddit.helper import random_subreddits
+
 
 @login_required()
 def createPost(request, postType):
@@ -37,8 +37,14 @@ def postDetail(request, post_id):
     cur_post = Post.objects.get(id=post_id)
     comments = cur_post.comments.all()
     form = CreateComment()
-
-    return render(request, 'post/postDetail.html', {'form':form, 'post':cur_post, 'comments': comments})
+    subreddits = random_subreddits()
+    context = {
+        'form': form,
+        'post': cur_post,
+        'comments': comments,
+        'subreddits': subreddits
+        }
+    return render(request, 'post/postDetail.html', context)
 
 @login_required()
 def addComment(request, post_id):
@@ -57,12 +63,14 @@ def addComment(request, post_id):
     return HttpResponseRedirect(reverse('post_detail', kwargs={'post_id':post_id}))
 
 
-def delete_post_view(request, post_id, sort_by):
-    title = {}
+def delete_post_view(request, post_id):
     post = Post.objects.get(id=post_id)
-    title['title'] = post.subreddit.title
+    title = post.subreddit.title
     post.delete()
-    return redirect(f"/subreddit/page/{title['title']}/{sort_by}")
+    if request.POST.get('next'):
+        next = request.POST.get('next')
+        return redirect(next)
+    return redirect(f'/subreddit/page/{title}/recent')
 
 
 @login_required()

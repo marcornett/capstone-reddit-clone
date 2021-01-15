@@ -1,17 +1,28 @@
 {% extends 'main.html' %}
 {% block content %}
 <div>
-    <h2>From your search: </h2>
-    <ul>
-        {% for subreddit in subreddits %}
-        <li>
-            <a href="{% url 'subreddit'  subreddit.title 'recent' %}">rc/{{ subreddit.title }}</a>
-            <div>{{ subreddit.members|length}} Members</div>
-            <div>{{ subreddit.about }}</div>
-            <button>Join</button>
-        </li>
-        {% endfor %}
-    </ul>
+    <h2>From your search...</h2>
+    <span id="search_text"></span>
+    
+    {% if subreddits %}
+        <ul>
+            {% for subreddit in subreddits %}
+            <li>
+                <a href="{% url 'subreddit'  subreddit.title 'recent' %}">rc/{{ subreddit.title }}</a>
+                <div>{{ subreddit.members|length}} Members</div>
+                <div>{{ subreddit.about }}</div>
+                <button>Join</button>
+            </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <h3>Nothing to see here...</h3>
+    {% endif %}
     {% include 'post/post_list.html' %}
+    <script>
+        let searchInput = document.getElementById('id_title')
+        let searchText = document.getElementById('search_text')
+        searchText.textContent = searchInput.value
+    </script>
 </div>
 {% endblock %}
