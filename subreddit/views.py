@@ -39,7 +39,7 @@ def subreddit_creation_view(request):
             )
             return redirect(f"/subreddit/page/{data['title']}/recent")
     context = {'form': form, 'title': title}
-    return render(request, 'authentication/generic_form.html', context)
+    return render(request, 'subreddit/createsubreddit.html', context)
 
 
 def subreddit_search_view(request):

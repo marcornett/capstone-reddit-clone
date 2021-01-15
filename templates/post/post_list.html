@@ -1,7 +1,7 @@
 {% load static %}
 
 {% for post in posts %}
-    <h4>by u/{{post.user}}</h4>
+    <h4>by uc/{{post.user}}</h4>
     {% if post.post %}
         <h3>Created: {{ post.created_at }}</h3>
         <h4><a href='/posts/like_post/{{post.id}}'>Like</a> {{ post.up_vote.count }}</h4>

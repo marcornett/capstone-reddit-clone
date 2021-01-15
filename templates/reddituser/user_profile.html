@@ -4,7 +4,9 @@
     <img src="{{ user.image.url }}" alt="Profile Image">
     <div>uc/{{ user.username }}</div>
     <div>{{ user.email }}</div>
-    <div>{{ user.bio }}</div>
+    {% if user.bio %}
+        <div>{{ user.bio }}</div>
+    {% endif %}
     <form method='post' action='' enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
