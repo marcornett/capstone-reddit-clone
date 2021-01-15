@@ -7,11 +7,15 @@
     {{ form.password }}
     <input type="submit" value="Submit">
 </form>
+{% if messages %}
+    {% for message in messages %}
+        <p>Notice: {{ message }}</p>
+    {% endfor %}
+{% endif %}
     <script>    
         let usernameField = document.getElementById('id_username')
         usernameField.placeholder = "Username"
         let passwordField = document.getElementById('id_password')
         passwordField.placeholder = "Enter password"
-
     </script>
 {% endblock %}
