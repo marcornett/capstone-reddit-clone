@@ -12,7 +12,13 @@
         {{ form.as_p }}
         <input type='submit' value='Submit'>
     </form>
-
+    {% if request.user == post.user or request.user.is_staff %}
+        <form method='get' action='/user/{{user.username}}/delete' enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type='submit' value='Delete Profile'>
+        </form>
+    {% endif %}
+    
     {% include 'post/post_list.html' %}
 </div>
 {% endblock content %}
