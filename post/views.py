@@ -64,12 +64,14 @@ def addComment(request, post_id):
     return HttpResponseRedirect(reverse('post_detail', kwargs={'post_id':post_id}))
 
 
-def delete_post_view(request, post_id, sort_by):
-    title = {}
+def delete_post_view(request, post_id):
     post = Post.objects.get(id=post_id)
-    title['title'] = post.subreddit.title
+    title = post.subreddit.title
     post.delete()
-    return redirect(f"/subreddit/page/{title['title']}/{sort_by}")
+    if request.POST.get('next'):
+        next = request.POST.get('next')
+        return redirect(next)
+    return redirect(f'/subreddit/page/{title}/recent')
 
 
 @login_required()

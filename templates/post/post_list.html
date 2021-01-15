@@ -9,9 +9,11 @@
             <h4><a href='/posts/dislike_post/{{post.id}}'>Dislike</a> {{ post.down_vote.count }}</h4>
             <h2>{{ post.post }}</h2>
             {% if request.user == post.user or request.user.is_staff %}
-                <a href='/posts/delete_post/{{ post.id }}/{{ sort_by }}'>
-                    <button>x</button>
-                </a>
+                <form method='post' action='/posts/delete_post/{{ post.id }}/' enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ request.path }}">
+                    <input type='submit' value='X'>
+                </form>
             {% endif %}
         {% elif post.link %}
             <h3>Created: {{ post.created_at }}</h3>
@@ -19,9 +21,11 @@
             <h4><a href='/posts/dislike_post/{{post.id}}'>Dislike</a> {{ post.down_vote.count }}</h4>
             <h2><a href='{{post.link}}'>{{ post.link }}</a></h2>
             {% if request.user == post.user or request.user.is_staff %}
-                <a href='/posts/delete_post/{{ post.id }}/{{ sort_by }}'>
-                    <button>x</button>
-                </a>
+                <form method='post' action='/posts/delete_post/{{ post.id }}/' enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ request.path }}">
+                    <input type='submit' value='X'>
+                </form>
             {% endif %}
         {% elif post.image %}
             <h3>Created: {{ post.created_at }}</h3>
@@ -29,9 +33,11 @@
             <h4><a href='/posts/dislike_post/{{post.id}}'>Dislike</a> {{ post.down_vote.count }}</h4>
             <img src='{{post.image.url}}'>
             {% if request.user == post.user or request.user.is_staff %}
-                <a href='/posts/delete_post/{{ post.id }}/{{ sort_by }}'>
-                    <button>x</button>
-                </a>
+                <form method='post' action='/posts/delete_post/{{ post.id }}/' enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ request.path }}">
+                    <input type='submit' value='X'>
+                </form>
             {% endif %}
         {% endif %}
         <hr>
