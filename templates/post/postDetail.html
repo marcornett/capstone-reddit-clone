@@ -4,6 +4,10 @@
     <h1>{{ post.title }}</h1>
 {% endif %}
 <h3>by {{ post.user }}</h3>
+<a href="{% url 'subreddit' post.subreddit.title 'recent' %}">
+    <h3>{{ post.subreddit.title }}</h3>
+</a>
+
 <h4><a href='/posts/like_post/{{post.id}}/'>Like</a></h4>
 <h4><a href='/posts/dislike_post/{{post.id}}/'>Dislike</a></h4>
 <hr>

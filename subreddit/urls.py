@@ -14,5 +14,4 @@ urlpatterns = [
         ),
     path('search/', views.subreddit_search_view, name='subreddit_search'),
     path('subscribe/<int:subreddit_id>/', views.subscribe, name='subscribe_subreddit'),
-    path('unsubscribe/<int:subreddit_id>/', views.unsubscribe, name='unsubscribe_subreddit'),
 ]
