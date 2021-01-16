@@ -13,6 +13,11 @@
         <input type='submit' value='Submit'>
     </form>
     <h3>Subscribed Channels</h3>
+    {% for subreddit in joined %}
+        <a href="{% url 'subreddit' subreddit.title 'recent' %}">
+            <p>{{ subreddit.title }}</p>
+        </a>
+    {% endfor %}
     {% if request.user == post.user or request.user.is_staff %}
         <form method='get' action='/user/{{user.username}}/delete' enctype="multipart/form-data">
             {% csrf_token %}

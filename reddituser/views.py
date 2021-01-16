@@ -4,6 +4,7 @@ from reddituser.forms import UpdateUserForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from post.models import Post
+from subreddit.models import Subreddit
 
 
 def user_profile_view(request, username):
@@ -12,6 +13,7 @@ def user_profile_view(request, username):
     posts = Post.objects.filter(
         user=request.user).order_by("created_at").reverse()
     sort_by = 'recent'
+    joined = Subreddit.objects.filter(members=request.user)
     if request.method == 'POST':
         form = UpdateUserForm(request.POST, request.FILES)
         if form.is_valid():
@@ -26,7 +28,8 @@ def user_profile_view(request, username):
         'user': user,
         'form': form,
         'posts': posts,
-        'sort_by': sort_by
+        'sort_by': sort_by,
+        'joined': joined
         }
     return render(request, 'reddituser/user_profile.html', context)
 

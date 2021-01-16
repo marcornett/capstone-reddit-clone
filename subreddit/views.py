@@ -20,12 +20,14 @@ def subreddit_view(request, title, sort_by):
     members_query = subreddit.members
     members = members_query.all()
     subreddits = random_subreddits()
+    is_member = request.user in subreddit.members.all()
     context = {
         'subreddit': subreddit,
         'subreddits': subreddits,
         'members': members,
         'posts': posts,
         'sort_by': sort_by,
+        'is_member': is_member
         }
     return render(request, 'subreddit/subreddit.html', context)
 
@@ -63,12 +65,18 @@ def subreddit_search_view(request):
         }
     return render(request, 'subreddit/search.html', context)
 
+
 def subscribe(request, subreddit_id):
     current_subreddit = Subreddit.objects.get(id=subreddit_id)
-    current_subreddit.members.add(request.user)
-    return render(request, 'authentication/index.html', {'subreddit': current_subreddit})
+    if request.user in current_subreddit.members.all():
+        current_subreddit.members.remove(request.user)
+    else:
+        current_subreddit.members.add(request.user)
+    last_url_list = request.META.get('HTTP_REFERER').split('/')
+    last_url_list = list(filter(None, last_url_list))
+    return HttpResponseRedirect(
+        reverse('subreddit', kwargs={
+            'title': current_subreddit.title,
+            'sort_by': last_url_list[-1]
+            }))
 
-def unsubscribe(request, subreddit_id):
-    current_subreddit = Subreddit.objects.get(id=subreddit_id)
-    current_subreddit.members.remove(request.user)
-    return render(request, 'authentication/index.html', {'subreddit': current_subreddit})

@@ -3,10 +3,12 @@
 <div>
     <h1>{{ subreddit.title }}</h3>
         <a href="{% url 'subscribe_subreddit' subreddit.id %}">
-            <button type="button">Subscribe</button></a>
-        <a href="{% url 'unsubscribe_subreddit' subreddit.id %}">
-            <button type="button">Unsubscribe</button></a>
-            
+            {% if is_member %}
+                <button type="button">Leave</button>
+            {% else %}
+                <button type="button">Join</button>
+            {% endif %}
+        </a>    
     <p>About: {{ subreddit.about }}</p>
     <p>Created at: {{ subreddit.created_at }}</p>
     <div>
@@ -14,7 +16,15 @@
         <br/>
         <span>Members</span>
     </div>
-    <p>Sort by: <a href='/subreddit/page/{{subreddit.title}}/trending'>Trending</a>   <a href='/subreddit/page/{{subreddit.title}}/recent'>Recent</a></p>
+    <p>
+        Sort by: 
+        <a href='/subreddit/page/{{subreddit.title}}/trending'>
+            Trending
+        </a>   
+        <a href='/subreddit/page/{{subreddit.title}}/recent'>
+            Recent
+        </a>
+    </p>
     {% include 'post/post_list.html' %}
 </div>
 {% endblock content %}
