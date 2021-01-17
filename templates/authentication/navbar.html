@@ -1,8 +1,8 @@
 {% load static %}
 <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
-        <a class="navbar-item" href="https://bulma.io">
-            <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
+        <a class="navbar-item" href="/">
+            <img src="{% static '/images/reddit-clone_logo.png' %}" width="112" height="28">
         </a>
 
         <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
@@ -23,9 +23,13 @@
         class="navbar-item"
         target="_blank" 
         rel="noopener noreferrer">
-        Github
+            <button class="button">
+                <span class="icon">
+                    <i class="fab fa-github"></i>
+                </span>
+                <span>GitHub</span>
+            </button>
         </a>
-
         <div class="navbar-item has-dropdown is-hoverable">
         <a class="navbar-link">
             More
@@ -69,7 +73,7 @@
             <a 
             href='/posts/createpost/message/'
             class="button is-primary">
-            Create Post
+            <i class="fas fa-feather-alt"></i>
             </a>
 
             <a 

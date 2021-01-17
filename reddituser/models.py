@@ -7,5 +7,5 @@ class RedditUser(AbstractUser):
     image = models.ImageField(upload_to='images/', default='images/default_profile.jpg')
 
     def __str__(self):
-        return f'{(self.id)} {self.username}'
+        return self.username
     

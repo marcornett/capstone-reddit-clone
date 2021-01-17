@@ -1,12 +1,14 @@
 {% extends 'main.html' %}
 {% block content %}
-{{title}}
-<form action="" method="post">
-    {% csrf_token %}
-    {{ form.title }}
-    {{ form.about }}
-    <input type="submit" value="Submit">
-</form>
+<div>
+    <h1>{{title}}</h1>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form.title }}
+        {{ form.about }}
+        <input type="submit" value="Submit">
+    </form>
+</div>
     <script>    
         let titleField = document.getElementById('subreddit_input')
         titleField.placeholder = "Title"
