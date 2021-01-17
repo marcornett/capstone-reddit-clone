@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from post.models import Post
 from subreddit.models import Subreddit
+from subreddit.helper import subreddit_search
 
 
 def user_profile_view(request, username):
@@ -14,6 +15,7 @@ def user_profile_view(request, username):
         user=request.user).order_by("created_at").reverse()
     sort_by = 'recent'
     joined = Subreddit.objects.filter(members=request.user)
+    subreddit_filter = subreddit_search(request)
     if request.method == 'POST':
         form = UpdateUserForm(request.POST, request.FILES)
         if form.is_valid():
@@ -29,9 +31,11 @@ def user_profile_view(request, username):
         'form': form,
         'posts': posts,
         'sort_by': sort_by,
-        'joined': joined
+        'joined': joined,
+        'subreddit_filter': subreddit_filter
         }
     return render(request, 'reddituser/user_profile.html', context)
+
 
 @login_required()
 def delete_profile_view(request, username):
@@ -40,7 +44,5 @@ def delete_profile_view(request, username):
         if request.user == user:
             logout(request)
         user.delete()
-
         return redirect('/')
-
     return render(request, 'reddituser/delete_check.html', {'username':username})

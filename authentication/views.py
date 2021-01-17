@@ -3,16 +3,15 @@ from django.contrib.auth import logout, login, authenticate
 from django.views import View
 from authentication.forms import SignUpForm, LoginForm
 from subreddit.models import Subreddit
-from subreddit.filters import SubredditFilter
 from django.contrib import messages
-from subreddit.helper import random_subreddits
+from subreddit.helper import random_subreddits, subreddit_search
 from post.models import Post
 
 
 class IndexView(View):
     def get(self, request):
         subreddits = Subreddit.objects.all()
-        subreddit_filter = SubredditFilter(request.GET, queryset=subreddits)
+        subreddit_filter = subreddit_search(request)
         subreddits = random_subreddits()
         posts = []
         if request.user.is_authenticated:

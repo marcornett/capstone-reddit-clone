@@ -3,13 +3,13 @@ from django.contrib.auth.decorators import login_required
 from post.forms import CreateComment, CreateImagePost, CreateLinkPost, CreateMessagePost
 from post.models import Post, PostComment
 from post.helper import newPost
-from subreddit.helper import random_subreddits
+from subreddit.helper import random_subreddits, subreddit_search
 
 
 @login_required()
 def createPost(request, postType):
     form = None
-
+    subreddit_filter = subreddit_search(request)
     if request.method == "POST":
         cur_post = None
         if postType == 'message':
@@ -30,21 +30,29 @@ def createPost(request, postType):
         form = CreateLinkPost()
     elif postType == 'image':
         form = CreateImagePost()
-    return render(request, 'post/createpost.html', {'form':form})
+    context = {
+        'form': form,
+        'subreddit_filter': subreddit_filter
+    }
+    return render(request, 'post/createpost.html', context)
 
-  
+
+
 def postDetail(request, post_id):
     cur_post = Post.objects.get(id=post_id)
     comments = cur_post.comments.all()
     form = CreateComment()
     subreddits = random_subreddits()
+    subreddit_filter = subreddit_search(request)
     context = {
         'form': form,
         'post': cur_post,
         'comments': comments,
-        'subreddits': subreddits
+        'subreddits': subreddits,
+        'subreddit_filter': subreddit_filter
         }
     return render(request, 'post/postDetail.html', context)
+
 
 @login_required()
 def addComment(request, post_id):
@@ -59,7 +67,6 @@ def addComment(request, post_id):
             )
             cur_post.comments.add(new_comment)
             return HttpResponseRedirect(reverse('post_detail', kwargs={'post_id':post_id}))
-
     return HttpResponseRedirect(reverse('post_detail', kwargs={'post_id':post_id}))
 
 
@@ -76,35 +83,30 @@ def delete_post_view(request, post_id):
 @login_required()
 def dislike_post(request, post_id):
     cur_post = Post.objects.get(id=post_id)
-
     cur_post.down_vote.add(request.user)
     cur_post.up_vote.remove(request.user)
-
     return HttpResponseRedirect(reverse('post_detail', kwargs={'post_id':post_id}))
+
 
 @login_required()
 def like_post(request, post_id):
     cur_post = Post.objects.get(id=post_id)
-
     cur_post.up_vote.add(request.user)
     cur_post.down_vote.remove(request.user)
-
     return HttpResponseRedirect(reverse('post_detail', kwargs={'post_id':post_id}))
+
 
 @login_required()
 def dislike_comment(request, comment_id, post_id):
     cur_comment = PostComment.objects.get(id=comment_id)
-
     cur_comment.down_vote.add(request.user)
     cur_comment.up_vote.remove(request.user)
-
     return HttpResponseRedirect(reverse('post_detail', kwargs={'post_id':post_id}))
+
 
 @login_required()
 def like_comment(request, comment_id, post_id):
     cur_comment = PostComment.objects.get(id=comment_id)
-
     cur_comment.up_vote.add(request.user)
     cur_comment.down_vote.remove(request.user)
-
     return HttpResponseRedirect(reverse('post_detail', kwargs={'post_id':post_id}))

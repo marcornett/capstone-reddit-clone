@@ -1,10 +1,9 @@
 from django.shortcuts import render, redirect, HttpResponseRedirect, reverse
 from subreddit.models import Subreddit
 from subreddit.forms import SubredditCreationForm
-from subreddit.filters import SubredditFilter
 from reddituser.models import RedditUser
 from post.models import Post
-from subreddit.helper import random_subreddits
+from subreddit.helper import random_subreddits, subreddit_search
 import random
 
 
@@ -20,6 +19,7 @@ def subreddit_view(request, title, sort_by):
     members_query = subreddit.members
     members = members_query.all()
     subreddits = random_subreddits()
+    subreddit_filter = subreddit_search(request)
     is_member = request.user in subreddit.members.all()
     context = {
         'subreddit': subreddit,
@@ -27,7 +27,8 @@ def subreddit_view(request, title, sort_by):
         'members': members,
         'posts': posts,
         'sort_by': sort_by,
-        'is_member': is_member
+        'is_member': is_member,
+        'subreddit_filter': subreddit_filter
         }
     return render(request, 'subreddit/subreddit.html', context)
 
@@ -35,6 +36,7 @@ def subreddit_view(request, title, sort_by):
 def subreddit_creation_view(request):
     form = SubredditCreationForm()
     title = 'Create Subreddit'
+    subreddit_filter = subreddit_search(request)
     if request.method == "POST":
         form = SubredditCreationForm(request.POST)
         if form.is_valid():
@@ -44,13 +46,17 @@ def subreddit_creation_view(request):
                 about=data['about']
             )
             return redirect(f"/subreddit/page/{data['title']}/recent")
-    context = {'form': form, 'title': title}
+    context = {
+        'form': form, 
+        'title': title,
+        'subreddit_filter': subreddit_filter
+        }
     return render(request, 'subreddit/createsubreddit.html', context)
 
 
 def subreddit_search_view(request):
     subreddits = Subreddit.objects.all()
-    subreddit_filter = SubredditFilter(request.GET, queryset=subreddits)
+    subreddit_filter = subreddit_search(request)
     subreddits = subreddit_filter.qs[:6]
     posts = []
     for subreddit in subreddits:
