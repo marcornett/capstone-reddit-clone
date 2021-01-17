@@ -14,8 +14,32 @@
     {% include 'authentication/navbar.html' %}
     {% block content %}
     {% endblock content %}
-    {% include 'post/post_list.html' %}
-    {% include 'authentication/sidebar.html' %}
+    <section class="tile is-ancestor">
+        {% if posts %}
+            <section class="tile is-parent">
+                {% include 'post/post_list.html' %}
+            </section>
+        {% endif %}
+        {% if subreddits %}
+            <section class="tile is-3 is-vertical is-parent">
+                {% include 'authentication/sidebar.html' %}
+            </section>
+        {% endif %}
+    </section>
+    <footer class="footer">
+        <div class="content has-text-centered">
+          <p>
+            <strong>Reddit Clone</strong> 
+            by Marcel Cornett, Andrew Canter, Cory Schlaudecker, & Gabrielle Morrow.
+            <br />
+            The source code
+            <a 
+            href="https://github.com/marcornett/capstone-reddit-clone" 
+            target="_blank" 
+            rel="noopener noreferrer">Github</a>.
+          </p>
+        </div>
+      </footer>
     <script>
         let searchField = document.getElementById('id_title')
         if(searchField !== null){
