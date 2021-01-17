@@ -18,8 +18,8 @@
 
     {% block content %}
     {% endblock content %}
+    {% include 'post/post_list.html' %}
     {% include 'authentication/sidebar.html' %}
-
     <script>
         let searchField = document.getElementById('id_title')
         if(searchField !== null){

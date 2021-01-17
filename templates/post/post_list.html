@@ -2,7 +2,15 @@
 
 <div>
     {% for post in posts %}
-        <h4>by uc/<a href='/user/{{post.user.username}}'>{{post.user}}</a></h4>
+
+        <h4>Post by uc/
+            <a href='/user/{{post.user.username}}'>{{post.user}}</a>
+            in
+            <a href="{% url 'subreddit' post.subreddit.title 'recent' %}">
+                rc/{{ post.subreddit.title }}
+            </a>
+        </h4>
+
         {% if post.post %}
             <a href="{% url 'post_detail' post.id %}">
                 <button>
@@ -11,24 +19,29 @@
                         <h4><a href='/posts/like_post/{{post.id}}'>Like</a> {{ post.up_vote.count }}</h4>
                         <h4><a href='/posts/dislike_post/{{post.id}}'>Dislike</a> {{ post.down_vote.count }}</h4>
                         <h2>{{ post.post }}</h2>
+
+                        {% comment %} Admin or current user delete {% endcomment %}
                         {% if request.user == post.user or request.user.is_staff %}
                         <form method='post' action='/posts/delete_post/{{ post.id }}/' enctype="multipart/form-data">
                             {% csrf_token %}
                             <input type="hidden" name="next" value="{{ request.path }}">
                             <input type='submit' value='X'>
                         </form>
+                        {% endif %}
                     </div>
                 </button>
-                {% endif %}
             </a>
+
         {% elif post.link %}
             <a href="{% url 'post_detail' post.id %}">
-                <div>
-                    <button>
+                <button>
+                    <div>
                         <h3>Created: {{ post.created_at }}</h3>
                         <h4><a href='/posts/like_post/{{post.id}}'>Like</a> {{ post.up_vote.count }}</h4>
                         <h4><a href='/posts/dislike_post/{{post.id}}'>Dislike</a> {{ post.down_vote.count }}</h4>
                         <h2><a href='{{post.link}}'>{{ post.link }}</a></h2>
+
+                        {% comment %} Admin or current user delete {% endcomment %}
                         {% if request.user == post.user or request.user.is_staff %}
                         <form method='post' action='/posts/delete_post/{{ post.id }}/' enctype="multipart/form-data">
                             {% csrf_token %}
@@ -36,17 +49,20 @@
                             <input type='submit' value='X'>
                         </form>
                         {% endif %}
-                    </button>
-                </div>
+                    </div>
+                </button>
             </a>
+
         {% elif post.image %}
             <a href="{% url 'post_detail' post.id %}">
-                <div>
-                    <button>
+                <button>
+                    <div>
                         <h3>Created: {{ post.created_at }}</h3>
                         <h4><a href='/posts/like_post/{{post.id}}'>Like</a> {{ post.up_vote.count }}</h4>
                         <h4><a href='/posts/dislike_post/{{post.id}}'>Dislike</a> {{ post.down_vote.count }}</h4>
                         <img src='{{post.image.url}}'>
+
+                        {% comment %} Admin or current user delete {% endcomment %}
                         {% if request.user == post.user or request.user.is_staff %}
                         <form method='post' action='/posts/delete_post/{{ post.id }}/' enctype="multipart/form-data">
                             {% csrf_token %}
@@ -54,10 +70,10 @@
                             <input type='submit' value='X'>
                         </form>
                         {% endif %}
-                    </button>
-                </a>
-            </div>
+                    </div>
+                </button>
+            </a>
         {% endif %}
-        <hr>
+
     {% endfor %}
 </div>
