@@ -6,15 +6,7 @@ from subreddit.models import Subreddit
 from subreddit.filters import SubredditFilter
 from django.contrib import messages
 from subreddit.helper import random_subreddits
-import random
-
-
-def error_500_view(request):
-    return render(request, '500.html')
-
-
-def error_404_view(request, exception):
-    return render(request, '404.html')
+from post.models import Post
 
 
 class IndexView(View):
@@ -22,9 +14,15 @@ class IndexView(View):
         subreddits = Subreddit.objects.all()
         subreddit_filter = SubredditFilter(request.GET, queryset=subreddits)
         subreddits = random_subreddits()
+        posts = []
+        if request.user.is_authenticated:
+            user_subreddits = Subreddit.objects.filter(members=request.user)
+            for sub in user_subreddits:
+                posts.extend(list(Post.objects.filter(subreddit=sub)))
         context = {
             'subreddits': subreddits,
-            'subreddit_filter': subreddit_filter
+            'subreddit_filter': subreddit_filter,
+            'posts': posts
         }
         return render(
             request, 'main.html', context)
@@ -91,3 +89,12 @@ class LogoutView(View):
     def get(self, request):
         logout(request)
         return redirect('/')
+
+
+def error_500_view(request):
+    return render(request, '500.html')
+
+
+def error_404_view(request, exception):
+    return render(request, '404.html')
+
