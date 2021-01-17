@@ -9,16 +9,20 @@ body{
 }
 
 .navbar-middle{
-    flex-basis: 1000px;
+    /* Width of Search Bar */
+    flex-basis: 45%;
 }
 
 #delete-button{
     width: 99%;
 }
 
+#id_title{
+
+}
+
 .input{
     margin-top: 8px;
-    color: #00d1b2;
 }
 
 .navbar-start{
@@ -26,7 +30,7 @@ body{
 }
 
 .navbar-end{
-    margin-left: 0px;
+    /* margin-left: 0px; */
 }
 
 .button{
