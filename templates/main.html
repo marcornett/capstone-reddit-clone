@@ -1,21 +1,17 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="has-navbar-fixed-top">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RedditClone: the clone of the front page of the internet</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <link rel="stylesheet" href="{% static '/css/style.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
     {% include 'authentication/navbar.html' %}
-    
-    {% comment %} Search Bar {% endcomment %}
-    <form action="/subreddit/search/" method="">
-        {% csrf_token %}
-        {{ subreddit_filter.form.title }}
-    </form>
-
     {% block content %}
     {% endblock content %}
     {% include 'post/post_list.html' %}
@@ -24,7 +20,9 @@
         let searchField = document.getElementById('id_title')
         if(searchField !== null){
             searchField.placeholder = "Search"
+            searchField.className = "input"
         }
     </script>
+    <script defer src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"></script>
 </body>
 </html>
