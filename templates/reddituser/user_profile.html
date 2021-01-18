@@ -1,30 +1,215 @@
 {% extends 'main.html' %}
+{% load myfilters %}
+
 {% block content %}
-<div>
-    <img src="{{ user.image.url }}" alt="Profile Image">
-    <div>uc/{{ user.username }}</div>
-    <div>{{ user.email }}</div>
-    {% if user.bio %}
-        <div>{{ user.bio }}</div>
-    {% endif %}
-    <form method='post' action='' enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type='submit' value='Submit'>
-    </form>
-    <h3>Subscribed Channels</h3>
-    {% for subreddit in joined %}
-        <a href="{% url 'subreddit' subreddit.title 'recent' %}">
-            <p>{{ subreddit.title }}</p>
-        </a>
-    {% endfor %}
-    {% if request.user == post.user or request.user.is_staff %}
-        <form method='get' action='/user/{{user.username}}/delete' enctype="multipart/form-data">
-            {% csrf_token %}
-            <input type='submit' value='Delete Profile'>
-        </form>
-    {% endif %}
-    
-    {% include 'post/post_list.html' %}
-</div>
+    <section class="tile is-ancestor">
+        <section class="tile is-3 is-vertical is-parent profile-panel">
+            <div class="tile is-child notification is-primary">
+                <section class="hero is-primary">
+                    <div class="hero-body">
+                        <div class="container">
+                        <h1 class="title">
+                            uc/{{ user.username }}
+                        </h1>
+                        <h2 class="subtitle">
+                            {{ user.email }}
+                        </h2>
+                        </div>
+                    </div>
+                </section>
+                <img src="{{ user.image.url }}" alt="Profile Image">
+                {% if user.bio %}
+                    <div>{{ user.bio }}</div>
+                {% endif %}
+                <form method='post' action='' enctype="multipart/form-data">
+                    {% csrf_token %}
+                        <div class="file is-info">
+                            <label class="file-label">
+                                {{ form.image|addclass:'file-input' }}
+                                <span class="file-cta">
+                                <span class="file-icon">
+                                    <i class="fas fa-upload"></i>
+                                </span>
+                                <span class="file-label">
+                                    Choose a file…
+                                </span>
+                                </span>
+                            </label>
+                            <input class="button is-info" type='submit' value='Submit'>
+                        </div>
+                        <div class="field">
+                            <div class="control">
+                                {{ form.bio }}
+                        </div>
+                    </div>
+                </form>
+                
+                    <div class="container">
+                        <div class="notification is-primary">
+                            <h2 class="subtitle">Subscribed Channels</h2>
+                            {% for subreddit in joined %}
+                                <a href="{% url 'subreddit' subreddit.title 'recent' %}">
+                                    <p>{{ subreddit.title }}</p>
+                                </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                
+                {% if request.user == user or request.user.is_staff %}
+                    <form method='get' action='/user/{{user.username}}/delete' enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input class="button is-danger is-fullwidth" type='submit' value='Delete Profile'>
+                    </form>
+                {% endif %}
+            </div>
+        </section>
+        <section class="tile is-parent">
+            <div class="tile is-child notification is-info">
+                <div class="hero-body">
+                    <h2 class="title">
+                        Your Posts
+                    </h2>
+                </div>
+                {% for post in user_posts %}
+                    {% comment %} Title/text type Post {% endcomment %}
+                    {% if post.post %}
+                        <div class="card">
+                            <div>
+                                <div class="card-content">
+                                    <p>{{ post.created_at }}</p>
+                                    <p>{{ post.title }}</p>
+                                    <p class="title" id="card_title">
+                                    {{ post.post }}
+                                    </p>
+                                    <p class="subtitle">
+                                        <a href='/user/{{post.user.username}}'>{{post.user}}</a>
+                                        in
+                                        <a href="{% url 'subreddit' post.subreddit.title 'recent' %}">
+                                            rc/{{ post.subreddit.title }}
+                                        </a>
+                                    </p>
+                                </div>
+                                <footer class="card-footer">
+                                    <p class="card-footer-item">
+                                    <span>
+                                        <a href="{% url 'post_detail' post.id %}">View</a>
+                                    </span>
+                                    </p>
+                                    <p class="card-footer-item">
+                                    <span>
+                                        <a href='/posts/like_post/{{post.id}}'>Like</a> {{ post.up_vote.count }}
+                                        <a href='/posts/dislike_post/{{post.id}}'>Dislike</a> {{ post.down_vote.count }}
+                                    </span>
+                                    </p>
+                                </footer>
+                            </div>
+                            <div>
+                                {% comment %} Admin or current user delete {% endcomment %}
+                                {% if request.user == post.user or request.user.is_staff %}
+                                <form method='post' action='/posts/delete_post/{{ post.id }}/' enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="next" value="{{ request.path }}">
+                                    <input type='submit' value='X' id="delete-button" class="button is-danger is-outlined s-small">
+                                </form>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <br/>
+
+                    {% comment %} Title/link type Post {% endcomment %}
+                    {% elif post.link %}
+                        <div class="card">
+                            <div>
+                                <div class="card-content">
+                                    <p>{{ post.created_at }}</p>
+                                    <p>{{ post.title }}</p>
+                                    <p class="title" id="card_title">
+                                    <a href='{{post.link}}'>{{ post.link }}</a>
+                                    </p>
+                                    <p class="subtitle">
+                                        <a href='/user/{{post.user.username}}'>{{post.user}}</a>
+                                        in
+                                        <a href="{% url 'subreddit' post.subreddit.title 'recent' %}">
+                                            rc/{{ post.subreddit.title }}
+                                        </a>
+                                    </p>
+                                </div>
+                                <footer class="card-footer">
+                                    <p class="card-footer-item">
+                                    <span>
+                                        <a href="{% url 'post_detail' post.id %}">View</a>
+                                    </span>
+                                    </p>
+                                    <p class="card-footer-item">
+                                    <span>
+                                        <a href='/posts/like_post/{{post.id}}'>Like</a> {{ post.up_vote.count }}
+                                        <a href='/posts/dislike_post/{{post.id}}'>Dislike</a> {{ post.down_vote.count }}
+                                    </span>
+                                    </p>
+                                </footer>
+                            </div>
+                            <div>
+                                {% comment %} Admin or current user delete {% endcomment %}
+                                {% if request.user == post.user or request.user.is_staff %}
+                                <form method='post' action='/posts/delete_post/{{ post.id }}/' enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="next" value="{{ request.path }}">
+                                    <input type='submit' value='X' id="delete-button" class="button is-danger is-outlined s-small">
+                                </form>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <br/>
+
+                    {% comment %} Title/image type Post {% endcomment %}
+                    {% elif post.image %}
+                        <div class="card">
+                            <div>
+                                <div class="card-content">
+                                    <p>{{ post.created_at }}</p>
+                                    {% if post.title %}
+                                        <p>{{ post.title }}</p>
+                                    {% endif %}
+                                    <p class="title" id="card_title">
+                                    <img src='{{ post.image.url }}'>
+                                    </p>
+                                    <p class="subtitle">
+                                        <a href='/user/{{post.user.username}}'>{{post.user}}</a>
+                                        in
+                                        <a href="{% url 'subreddit' post.subreddit.title 'recent' %}">
+                                            rc/{{ post.subreddit.title }}
+                                        </a>
+                                    </p>
+                                </div>
+                                <footer class="card-footer">
+                                    <p class="card-footer-item">
+                                    <span>
+                                        <a href="{% url 'post_detail' post.id %}">View</a>
+                                    </span>
+                                    </p>
+                                    <p class="card-footer-item">
+                                    <span>
+                                        <a href='/posts/like_post/{{post.id}}'>Like</a> {{ post.up_vote.count }}
+                                        <a href='/posts/dislike_post/{{post.id}}'>Dislike</a> {{ post.down_vote.count }}
+                                    </span>
+                                    </p>
+                                </footer>
+                            </div>
+                            <div>
+                                {% comment %} Admin or current user delete {% endcomment %}
+                                {% if request.user == post.user or request.user.is_staff %}
+                                <form method='post' action='/posts/delete_post/{{ post.id }}/' enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="next" value="{{ request.path }}">
+                                    <input type='submit' value='X' id="delete-button" class="button is-danger is-outlined s-small">
+                                </form>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <br/>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </section>
+    </section>
 {% endblock content %}

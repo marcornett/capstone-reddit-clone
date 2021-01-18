@@ -1,4 +1,6 @@
 {% load static %}
+{% load myfilters %}
+
 
 <!DOCTYPE html>
 <html lang="en" class="has-navbar-fixed-top">
@@ -9,23 +11,56 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
     <link rel="stylesheet" href="{% static '/css/style.css' %}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
 </head>
 <body>
     {% include 'authentication/navbar.html' %}
     {% block content %}
     {% endblock content %}
-    <section class="tile is-ancestor">
+    <main id="main" class="tile is-ancestor">
         {% if posts %}
             <section class="tile is-parent">
                 {% include 'post/post_list.html' %}
             </section>
+        {% elif is_home %}
+            <section class="tile is-parent">
+                <div class="tile is-child notification is-info not-member-parent">
+                    <div class="card not-member-card">
+                        <div class="card-content">
+                            <p>{{ post.created_at }}</p>
+                            <p>{{ post.title }}</p>
+                            <p class="title" id="card_title">
+                            {{ post.post }}
+                            </p>
+                            <p class="subtitle not-member-message">
+                                Reddit Clone gets even better than real Reddit when you join communities, 
+                                so find some that you’ll love!
+                                <br/>
+                                <br />
+                                <i class="fas fa-asterisk animate__animated animate__rotateIn not-member-asterisk"></i>
+                            </p>
+                        </div>
+                        <footer class="card-footer">
+                            <p class="card-footer-item">
+                                <span></span>
+                            </p>
+                            <p class="card-footer-item">
+                                <span><br/></span>
+                            </p>
+                        </footer>
+                    </div>
+                </div>
+            </section>
         {% endif %}
         {% if subreddits %}
-            <section class="tile is-3 is-vertical is-parent">
+            <section class="tile is-3 is-vertical is-parent subreddit-panel">
                 {% include 'authentication/sidebar.html' %}
             </section>
         {% endif %}
-    </section>
+    </main>
     <footer class="footer">
         <div class="content has-text-centered">
           <p>

@@ -11,8 +11,8 @@ from subreddit.helper import subreddit_search
 def user_profile_view(request, username):
     user = RedditUser.objects.get(username=username)
     form = UpdateUserForm()
-    posts = Post.objects.filter(
-        user=request.user).order_by("created_at").reverse()
+    user_posts = Post.objects.filter(
+        user=request.user).order_by("created_at").reverse() 
     sort_by = 'recent'
     joined = Subreddit.objects.filter(members=request.user)
     subreddit_filter = subreddit_search(request)
@@ -29,7 +29,7 @@ def user_profile_view(request, username):
     context = {
         'user': user,
         'form': form,
-        'posts': posts,
+        'user_posts': user_posts,
         'sort_by': sort_by,
         'joined': joined,
         'subreddit_filter': subreddit_filter
