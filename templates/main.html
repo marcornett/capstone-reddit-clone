@@ -1,4 +1,6 @@
 {% load static %}
+{% load myfilters %}
+
 
 <!DOCTYPE html>
 <html lang="en" class="has-navbar-fixed-top">
@@ -18,7 +20,7 @@
     {% include 'authentication/navbar.html' %}
     {% block content %}
     {% endblock content %}
-    <section class="tile is-ancestor">
+    <main id="main" class="tile is-ancestor">
         {% if posts %}
             <section class="tile is-parent">
                 {% include 'post/post_list.html' %}
@@ -58,7 +60,7 @@
                 {% include 'authentication/sidebar.html' %}
             </section>
         {% endif %}
-    </section>
+    </main>
     <footer class="footer">
         <div class="content has-text-centered">
           <p>

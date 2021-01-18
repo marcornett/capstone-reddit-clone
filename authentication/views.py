@@ -18,7 +18,10 @@ class IndexView(View):
         if request.user.is_authenticated:
             user_subreddits = Subreddit.objects.filter(members=request.user)
             for sub in user_subreddits:
-                posts.extend(list(Post.objects.filter(subreddit=sub)))
+                posts.extend(
+                    list(Post.objects.filter(
+                        subreddit=sub).order_by(
+                            'created_at').reverse()))
         context = {
             'subreddits': subreddits,
             'subreddit_filter': subreddit_filter,

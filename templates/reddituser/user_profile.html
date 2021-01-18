@@ -1,36 +1,75 @@
 {% extends 'main.html' %}
+{% load myfilters %}
+
 {% block content %}
     <section class="tile is-ancestor">
         <section class="tile is-3 is-vertical is-parent profile-panel">
             <div class="tile is-child notification is-primary">
+                <section class="hero is-primary">
+                    <div class="hero-body">
+                        <div class="container">
+                        <h1 class="title">
+                            uc/{{ user.username }}
+                        </h1>
+                        <h2 class="subtitle">
+                            {{ user.email }}
+                        </h2>
+                        </div>
+                    </div>
+                </section>
                 <img src="{{ user.image.url }}" alt="Profile Image">
-                <div>uc/{{ user.username }}</div>
-                <div>{{ user.email }}</div>
                 {% if user.bio %}
                     <div>{{ user.bio }}</div>
                 {% endif %}
                 <form method='post' action='' enctype="multipart/form-data">
                     {% csrf_token %}
-                    {{ form.as_p }}
-                    <input type='submit' value='Submit'>
+                        <div class="file is-info">
+                            <label class="file-label">
+                                {{ form.image|addclass:'file-input' }}
+                                <span class="file-cta">
+                                <span class="file-icon">
+                                    <i class="fas fa-upload"></i>
+                                </span>
+                                <span class="file-label">
+                                    Choose a file…
+                                </span>
+                                </span>
+                            </label>
+                            <input class="button is-info" type='submit' value='Submit'>
+                        </div>
+                        <div class="field">
+                            <div class="control">
+                                {{ form.bio }}
+                        </div>
+                    </div>
                 </form>
-                <h3>Subscribed Channels</h3>
-                {% for subreddit in joined %}
-                    <a href="{% url 'subreddit' subreddit.title 'recent' %}">
-                        <p>{{ subreddit.title }}</p>
-                    </a>
-                {% endfor %}
+                
+                    <div class="container">
+                        <div class="notification is-primary">
+                            <h2 class="subtitle">Subscribed Channels</h2>
+                            {% for subreddit in joined %}
+                                <a href="{% url 'subreddit' subreddit.title 'recent' %}">
+                                    <p>{{ subreddit.title }}</p>
+                                </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                
                 {% if request.user == user or request.user.is_staff %}
                     <form method='get' action='/user/{{user.username}}/delete' enctype="multipart/form-data">
                         {% csrf_token %}
-                        <input type='submit' value='Delete Profile'>
+                        <input class="button is-danger is-fullwidth" type='submit' value='Delete Profile'>
                     </form>
                 {% endif %}
             </div>
         </section>
         <section class="tile is-parent">
             <div class="tile is-child notification is-info">
-            <h1>Your posts</h1>
+                <div class="hero-body">
+                    <h2 class="title">
+                        Your Posts
+                    </h2>
+                </div>
                 {% for post in user_posts %}
                     {% comment %} Title/text type Post {% endcomment %}
                     {% if post.post %}
@@ -70,7 +109,7 @@
                                 <form method='post' action='/posts/delete_post/{{ post.id }}/' enctype="multipart/form-data">
                                     {% csrf_token %}
                                     <input type="hidden" name="next" value="{{ request.path }}">
-                                    <input type='submit' value='X' id="delete-button" class="button is-danger is-outlined s-small is-fullwidth">
+                                    <input type='submit' value='X' id="delete-button" class="button is-danger is-outlined s-small">
                                 </form>
                                 {% endif %}
                             </div>
@@ -115,7 +154,7 @@
                                 <form method='post' action='/posts/delete_post/{{ post.id }}/' enctype="multipart/form-data">
                                     {% csrf_token %}
                                     <input type="hidden" name="next" value="{{ request.path }}">
-                                    <input type='submit' value='X' id="delete-button" class="button is-danger is-outlined s-small is-fullwidth">
+                                    <input type='submit' value='X' id="delete-button" class="button is-danger is-outlined s-small">
                                 </form>
                                 {% endif %}
                             </div>
@@ -162,7 +201,7 @@
                                 <form method='post' action='/posts/delete_post/{{ post.id }}/' enctype="multipart/form-data">
                                     {% csrf_token %}
                                     <input type="hidden" name="next" value="{{ request.path }}">
-                                    <input type='submit' value='X' id="delete-button" class="button is-danger is-outlined s-small is-fullwidth">
+                                    <input type='submit' value='X' id="delete-button" class="button is-danger is-outlined s-small">
                                 </form>
                                 {% endif %}
                             </div>
