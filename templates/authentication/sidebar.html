@@ -1,13 +1,15 @@
 {% load static %}
 <aside class="tile is-child notification is-primary subreddit-panel">
-{% if subreddits %}
-    <h3>Communities</h3>
-    <ul>
-        {% for subreddit in subreddits %}
-        <li>
-            <a href="subreddit/page/{{ subreddit.title }}/recent">rc/{{ subreddit.title }}</a>
-        </li>
-        {% endfor %}
-    </ul>
-{% endif %}
+    {% if subreddits %}
+        <h3>Communities</h3>
+        <ul>
+            {% for subreddit in subreddits %}
+            <li>
+                <a href="{% url 'subreddit' subreddit.title 'recent' %}">
+                    rc/{{ subreddit.title }}
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
 </aside>
