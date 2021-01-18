@@ -85,6 +85,9 @@ def dislike_post(request, post_id):
     cur_post = Post.objects.get(id=post_id)
     cur_post.down_vote.add(request.user)
     cur_post.up_vote.remove(request.user)
+    if request.POST.get('next'):
+        next = request.POST.get('next')
+        return redirect(next)
     return HttpResponseRedirect(reverse('post_detail', kwargs={'post_id':post_id}))
 
 
@@ -93,6 +96,9 @@ def like_post(request, post_id):
     cur_post = Post.objects.get(id=post_id)
     cur_post.up_vote.add(request.user)
     cur_post.down_vote.remove(request.user)
+    if request.POST.get('next'):
+        next = request.POST.get('next')
+        return redirect(next)
     return HttpResponseRedirect(reverse('post_detail', kwargs={'post_id':post_id}))
 
 
