@@ -95,12 +95,18 @@
                                         <a href="{% url 'post_detail' post.id %}">View</a>
                                     </span>
                                     </p>
-                                    <p class="card-footer-item">
-                                    <span>
-                                        <a href='/posts/like_post/{{post.id}}'>Like</a> {{ post.up_vote.count }}
-                                        <a href='/posts/dislike_post/{{post.id}}'>Dislike</a> {{ post.down_vote.count }}
-                                    </span>
-                                    </p>
+                                    {% if request.user.is_authenticated %}
+                                        <form method='post' action='/posts/like_post/{{post.id}}/' enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="next" value="{{ request.path }}">
+                                            <input type="submit" value="Like  {{ post.up_vote.count }}">
+                                        </form>
+                                        <form method='post' action='/posts/dislike_post/{{post.id}}/' enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="next" value="{{ request.path }}">
+                                            <input type='submit' value="Dislike  {{ post.down_vote.count }}">
+                                        </form>
+                                    {% endif %}
                                 </footer>
                             </div>
                             <div>
@@ -140,12 +146,18 @@
                                         <a href="{% url 'post_detail' post.id %}">View</a>
                                     </span>
                                     </p>
-                                    <p class="card-footer-item">
-                                    <span>
-                                        <a href='/posts/like_post/{{post.id}}'>Like</a> {{ post.up_vote.count }}
-                                        <a href='/posts/dislike_post/{{post.id}}'>Dislike</a> {{ post.down_vote.count }}
-                                    </span>
-                                    </p>
+                                    {% if request.user.is_authenticated %}
+                                        <form method='post' action='/posts/like_post/{{post.id}}/' enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="next" value="{{ request.path }}">
+                                            <input type="submit" value="Like  {{ post.up_vote.count }}">
+                                        </form>
+                                        <form method='post' action='/posts/dislike_post/{{post.id}}/' enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="next" value="{{ request.path }}">
+                                            <input type='submit' value="Dislike  {{ post.down_vote.count }}">
+                                        </form>
+                                    {% endif %}
                                 </footer>
                             </div>
                             <div>
@@ -188,10 +200,18 @@
                                     </span>
                                     </p>
                                     <p class="card-footer-item">
-                                    <span>
-                                        <a href='/posts/like_post/{{post.id}}'>Like</a> {{ post.up_vote.count }}
-                                        <a href='/posts/dislike_post/{{post.id}}'>Dislike</a> {{ post.down_vote.count }}
-                                    </span>
+                                    {% if request.user.is_authenticated %}
+                                        <form method='post' action='/posts/like_post/{{post.id}}/' enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="next" value="{{ request.path }}">
+                                            <input type="submit" value="Like  {{ post.up_vote.count }}">
+                                        </form>
+                                        <form method='post' action='/posts/dislike_post/{{post.id}}/' enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="next" value="{{ request.path }}">
+                                            <input type='submit' value="Dislike  {{ post.down_vote.count }}">
+                                        </form>
+                                    {% endif %}
                                     </p>
                                 </footer>
                             </div>

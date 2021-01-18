@@ -8,8 +8,18 @@
     <h3>{{ post.subreddit.title }}</h3>
 </a>
 
-<h4><a href='/posts/like_post/{{post.id}}/'>Like</a></h4>
-<h4><a href='/posts/dislike_post/{{post.id}}/'>Dislike</a></h4>
+{% if request.user.is_authenticated %}
+    <form method='post' action='/posts/like_post/{{post.id}}/' enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ request.path }}">
+        <input type="submit" value="Like  {{ post.up_vote.count }}">
+    </form>
+    <form method='post' action='/posts/dislike_post/{{post.id}}/' enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ request.path }}">
+        <input type='submit' value="Dislike  {{ post.down_vote.count }}">
+    </form>
+{% endif %}
 <hr>
 
 <!-- Checks for type of post and displays it -->
