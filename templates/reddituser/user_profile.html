@@ -99,13 +99,14 @@
                                         <form method='post' action='/posts/like_post/{{post.id}}/' enctype="multipart/form-data">
                                             {% csrf_token %}
                                             <input type="hidden" name="next" value="{{ request.path }}">
-                                            <input type="submit" value="Like  {{ post.up_vote.count }}">
+                                            <input type="submit" value="Like">
                                         </form>
                                         <form method='post' action='/posts/dislike_post/{{post.id}}/' enctype="multipart/form-data">
                                             {% csrf_token %}
                                             <input type="hidden" name="next" value="{{ request.path }}">
-                                            <input type='submit' value="Dislike  {{ post.down_vote.count }}">
+                                            <input type='submit' value="Dislike">
                                         </form>
+                                        {{ post.getPopularity }}
                                     {% endif %}
                                 </footer>
                             </div>
@@ -150,13 +151,14 @@
                                         <form method='post' action='/posts/like_post/{{post.id}}/' enctype="multipart/form-data">
                                             {% csrf_token %}
                                             <input type="hidden" name="next" value="{{ request.path }}">
-                                            <input type="submit" value="Like  {{ post.up_vote.count }}">
+                                            <input type="submit" value="Like">
                                         </form>
                                         <form method='post' action='/posts/dislike_post/{{post.id}}/' enctype="multipart/form-data">
                                             {% csrf_token %}
                                             <input type="hidden" name="next" value="{{ request.path }}">
-                                            <input type='submit' value="Dislike  {{ post.down_vote.count }}">
+                                            <input type='submit' value="Dislike">
                                         </form>
+                                        {{ post.getPopularity }}
                                     {% endif %}
                                 </footer>
                             </div>
@@ -204,13 +206,14 @@
                                         <form method='post' action='/posts/like_post/{{post.id}}/' enctype="multipart/form-data">
                                             {% csrf_token %}
                                             <input type="hidden" name="next" value="{{ request.path }}">
-                                            <input type="submit" value="Like  {{ post.up_vote.count }}">
+                                            <input type="submit" value="Like">
                                         </form>
                                         <form method='post' action='/posts/dislike_post/{{post.id}}/' enctype="multipart/form-data">
                                             {% csrf_token %}
                                             <input type="hidden" name="next" value="{{ request.path }}">
-                                            <input type='submit' value="Dislike  {{ post.down_vote.count }}">
+                                            <input type='submit' value="Dislike">
                                         </form>
+                                        {{ post.getPopularity }}
                                     {% endif %}
                                     </p>
                                 </footer>
