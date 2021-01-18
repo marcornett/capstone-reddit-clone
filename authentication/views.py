@@ -13,6 +13,7 @@ class IndexView(View):
         subreddits = Subreddit.objects.all()
         subreddit_filter = subreddit_search(request)
         subreddits = random_subreddits()
+        is_home = True
         posts = []
         if request.user.is_authenticated:
             user_subreddits = Subreddit.objects.filter(members=request.user)
@@ -21,7 +22,8 @@ class IndexView(View):
         context = {
             'subreddits': subreddits,
             'subreddit_filter': subreddit_filter,
-            'posts': posts
+            'posts': posts,
+            'is_home': is_home
         }
         return render(
             request, 'main.html', context)

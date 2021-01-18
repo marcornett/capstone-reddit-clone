@@ -98,7 +98,9 @@
                 <div>
                     <div class="card-content">
                         <p>{{ post.created_at }}</p>
-                        <p>{{ post.title }}</p>
+                        {% if post.title %}
+                            <p>{{ post.title }}</p>
+                        {% endif %}
                         <p class="title" id="card_title">
                         <img src='{{ post.image.url }}'>
                         </p>
