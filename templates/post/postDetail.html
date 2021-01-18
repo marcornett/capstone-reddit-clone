@@ -9,16 +9,17 @@
 </a>
 
 {% if request.user.is_authenticated %}
-    <form method='post' action='/posts/like_post/{{post.id}}/' enctype="multipart/form-data">
+    <form method='post' action='/posts/like_dis_post/{{post.id}}/Like/' enctype="multipart/form-data">
         {% csrf_token %}
         <input type="hidden" name="next" value="{{ request.path }}">
-        <input type="submit" value="Like  {{ post.up_vote.count }}">
+        <input type="submit" value="Like">
     </form>
-    <form method='post' action='/posts/dislike_post/{{post.id}}/' enctype="multipart/form-data">
+    <form method='post' action='/posts/like_dis_post/{{post.id}}/Dislike/' enctype="multipart/form-data">
         {% csrf_token %}
         <input type="hidden" name="next" value="{{ request.path }}">
-        <input type='submit' value="Dislike  {{ post.down_vote.count }}">
+        <input type='submit' value="Dislike">
     </form>
+    {{ post.getPopularity }}
 {% endif %}
 <hr>
 
@@ -43,8 +44,8 @@
 <hr>
 {% for comment in comments %}
     <h3>{{ comment.user }}</h3>
-    <h4><a href='/posts/like_comment/{{comment.id}}/{{post.id}}/'>Like</a></h4>
-    <h4><a href='/posts/dislike_comment/{{comment.id}}/{{post.id}}/'>Dislike</a></h4>
+    <h4><a href='/posts/like_dis_comment/{{comment.id}}/{{post.id}}/Like/'>Like {{ comment.up_vote.count }}</a></h4>
+    <h4><a href='/posts/like_dis_comment/{{comment.id}}/{{post.id}}/Dislike/'>Dislike {{comment.down_vote.count }}</a></h4>
     <p>{{ comment.message }}</p>
     <hr>
 {% endfor %}

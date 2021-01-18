@@ -81,10 +81,15 @@ def delete_post_view(request, post_id):
 
 
 @login_required()
-def dislike_post(request, post_id):
+def like_dis_post(request, post_id, like_dis):
     cur_post = Post.objects.get(id=post_id)
-    cur_post.down_vote.add(request.user)
-    cur_post.up_vote.remove(request.user)
+    if like_dis == "Like":
+        cur_post.up_vote.add(request.user)
+        cur_post.down_vote.remove(request.user)
+    elif like_dis == "Dislike":
+        cur_post.down_vote.add(request.user)
+        cur_post.up_vote.remove(request.user)
+
     if request.POST.get('next'):
         next = request.POST.get('next')
         return redirect(next)
@@ -92,27 +97,14 @@ def dislike_post(request, post_id):
 
 
 @login_required()
-def like_post(request, post_id):
-    cur_post = Post.objects.get(id=post_id)
-    cur_post.up_vote.add(request.user)
-    cur_post.down_vote.remove(request.user)
-    if request.POST.get('next'):
-        next = request.POST.get('next')
-        return redirect(next)
-    return HttpResponseRedirect(reverse('post_detail', kwargs={'post_id':post_id}))
-
-
-@login_required()
-def dislike_comment(request, comment_id, post_id):
+def like_dis_comment(request, comment_id, post_id, like_dis):
     cur_comment = PostComment.objects.get(id=comment_id)
-    cur_comment.down_vote.add(request.user)
-    cur_comment.up_vote.remove(request.user)
+    if like_dis == "Like":
+        cur_comment.up_vote.add(request.user)
+        cur_comment.down_vote.remove(request.user)
+    elif like_dis == "Dislike":
+        cur_comment.down_vote.add(request.user)
+        cur_comment.up_vote.remove(request.user)
+
     return HttpResponseRedirect(reverse('post_detail', kwargs={'post_id':post_id}))
 
-
-@login_required()
-def like_comment(request, comment_id, post_id):
-    cur_comment = PostComment.objects.get(id=comment_id)
-    cur_comment.up_vote.add(request.user)
-    cur_comment.down_vote.remove(request.user)
-    return HttpResponseRedirect(reverse('post_detail', kwargs={'post_id':post_id}))

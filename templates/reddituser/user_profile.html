@@ -96,12 +96,12 @@
                                     </span>
                                     </p>
                                     {% if request.user.is_authenticated %}
-                                        <form method='post' action='/posts/like_post/{{post.id}}/' enctype="multipart/form-data">
+                                        <form method='post' action='/posts/like_dis_post/{{post.id}}/Like/' enctype="multipart/form-data">
                                             {% csrf_token %}
                                             <input type="hidden" name="next" value="{{ request.path }}">
                                             <input type="submit" value="Like">
                                         </form>
-                                        <form method='post' action='/posts/dislike_post/{{post.id}}/' enctype="multipart/form-data">
+                                        <form method='post' action='/posts/like_dis_post/{{post.id}}/Dislike/' enctype="multipart/form-data">
                                             {% csrf_token %}
                                             <input type="hidden" name="next" value="{{ request.path }}">
                                             <input type='submit' value="Dislike">
@@ -148,12 +148,12 @@
                                     </span>
                                     </p>
                                     {% if request.user.is_authenticated %}
-                                        <form method='post' action='/posts/like_post/{{post.id}}/' enctype="multipart/form-data">
+                                        <form method='post' action='/posts/like_dis_post/{{post.id}}/Like/' enctype="multipart/form-data">
                                             {% csrf_token %}
                                             <input type="hidden" name="next" value="{{ request.path }}">
                                             <input type="submit" value="Like">
                                         </form>
-                                        <form method='post' action='/posts/dislike_post/{{post.id}}/' enctype="multipart/form-data">
+                                        <form method='post' action='/posts/like_dis_post/{{post.id}}/Dislike/' enctype="multipart/form-data">
                                             {% csrf_token %}
                                             <input type="hidden" name="next" value="{{ request.path }}">
                                             <input type='submit' value="Dislike">
@@ -203,12 +203,12 @@
                                     </p>
                                     <p class="card-footer-item">
                                     {% if request.user.is_authenticated %}
-                                        <form method='post' action='/posts/like_post/{{post.id}}/' enctype="multipart/form-data">
+                                        <form method='post' action='/posts/like_dis_post/{{post.id}}/Like/' enctype="multipart/form-data">
                                             {% csrf_token %}
                                             <input type="hidden" name="next" value="{{ request.path }}">
                                             <input type="submit" value="Like">
                                         </form>
-                                        <form method='post' action='/posts/dislike_post/{{post.id}}/' enctype="multipart/form-data">
+                                        <form method='post' action='/posts/like_dis_post/{{post.id}}/Dislike/' enctype="multipart/form-data">
                                             {% csrf_token %}
                                             <input type="hidden" name="next" value="{{ request.path }}">
                                             <input type='submit' value="Dislike">
