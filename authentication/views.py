@@ -22,12 +22,17 @@ class IndexView(View):
                     list(Post.objects.filter(
                         subreddit=sub).order_by(
                             'created_at').reverse()))
+        else:
+            post_list = list(Post.objects.all())
+            post_list.sort(key=lambda x: x.up_vote.count() - x.down_vote.count())
+            posts = post_list[::-1]
         context = {
             'subreddits': subreddits,
             'subreddit_filter': subreddit_filter,
             'posts': posts,
             'is_home': is_home
         }
+            
         return render(
             request, 'main.html', context)
 
