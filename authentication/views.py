@@ -24,8 +24,8 @@ class IndexView(View):
                             'created_at').reverse()))
         else:
             post_list = list(Post.objects.all())
-            post_list.sort(key=lambda x: x.up_vote.count() - x.down_vote.count())
-            posts = post_list[::-1]
+            post_list = sorted(post_list, key = lambda i: 0 if i.getPopularity() == 0 else -1 / i.getPopularity())
+            posts = post_list
         context = {
             'subreddits': subreddits,
             'subreddit_filter': subreddit_filter,

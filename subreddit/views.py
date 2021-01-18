@@ -12,8 +12,8 @@ def subreddit_view(request, title, sort_by):
     posts = list()
     if sort_by == 'trending':
         post_list = list(Post.objects.all())
-        post_list.sort(key=lambda x: x.up_vote.count() - x.down_vote.count())
-        posts = post_list[::-1]
+        post_list = sorted(post_list, key = lambda i: 0 if i.getPopularity() == 0 else -1 / i.getPopularity())
+        posts = post_list
     else:
         posts = Post.objects.filter(subreddit=subreddit).order_by('created_at').reverse()
     members_query = subreddit.members

@@ -24,6 +24,10 @@ class PostComment(models.Model):
 
 
 class Post(models.Model):
+    def getPopularity(self):
+        return self.up_vote.count() - self.down_vote.count()
+
+
     user = models.ForeignKey(
         RedditUser, on_delete=models.CASCADE, related_name="user")
     post = models.CharField(
