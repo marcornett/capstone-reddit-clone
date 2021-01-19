@@ -39,7 +39,6 @@ body{
     width: 99%;
 }
 
-
 .input{
     margin-top: 8px;
 }
@@ -77,10 +76,17 @@ body{
     color: #3298dc;
 }
 
-
 .glow{
     color: #00d1b2;
     border: 1px solid #00d1b2;
     border-radius: 30px;
     box-shadow: 0 0 20px #00d1b2;
+}
+
+.search-form{
+    display: flex;
+}
+
+.search-button{
+    margin-top: 8px;
 }

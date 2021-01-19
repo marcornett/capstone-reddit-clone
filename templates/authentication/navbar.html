@@ -51,9 +51,10 @@
     </div>
     <div class="navbar-middle">
         {% comment %} Search Bar {% endcomment %}
-        <form action="/subreddit/search/" method="">
+        <form class="search-form" action="/subreddit/search/" method="" >
             {% csrf_token %}
             {{ subreddit_filter.form.title }}
+            <input class="button search-button" type="submit" value="Search">
         </form>
     </div>
 
