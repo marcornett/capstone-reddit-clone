@@ -12,9 +12,10 @@
     <link rel="stylesheet" href="{% static '/css/style.css' %}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
     />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 </head>
 <body>
     {% include 'authentication/navbar.html' %}
@@ -86,5 +87,23 @@
         }
     </script>
     <script defer src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+  $( function() {
+    //   for (const key in object) {
+    //       if (Object.hasOwnProperty.call(object, key)) {
+    //           const element = object[key];
+              
+    //       }
+    //   }
+    let tagString = ["{% for subreddit in search_subreddits %} {{ subreddit.title }} {% endfor %}"]    
+    let tagArr = tagString[0].split(' ')
+    let availableTags = tagArr.filter((tag) => tag != "")
+    $( "#id_title" ).autocomplete({
+      source: availableTags
+    });
+  } );
+  </script>
 </body>
 </html>
