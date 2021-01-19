@@ -4,6 +4,9 @@ from subreddit.models import Subreddit
 from django.utils import timezone
 
 class PostComment(models.Model):
+    def getPopularity(self):
+        return self.up_vote.count() - self.down_vote.count()
+
     user = models.ForeignKey(RedditUser, on_delete=models.CASCADE, related_name="comment_user")
     message = models.CharField(
         max_length=500,

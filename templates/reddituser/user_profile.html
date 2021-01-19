@@ -101,12 +101,12 @@
                                             <input type="hidden" name="next" value="{{ request.path }}">
                                             <input type="submit" value="Like">
                                         </form>
+                                        {{ post.getPopularity }}
                                         <form method='post' action='/posts/like_dis_post/{{post.id}}/Dislike/' enctype="multipart/form-data">
                                             {% csrf_token %}
                                             <input type="hidden" name="next" value="{{ request.path }}">
                                             <input type='submit' value="Dislike">
                                         </form>
-                                        {{ post.getPopularity }}
                                     {% endif %}
                                 </footer>
                             </div>
