@@ -12,7 +12,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         for _ in range(2000):
-            ids_to_grab = random.randint(1, 1001)
+            ids_to_grab = random.randint(1, 900)
             PostComment.objects.create(
                 user=RedditUser.objects.get(id=ids_to_grab),
                 message=text.text(),

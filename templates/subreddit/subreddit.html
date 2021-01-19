@@ -27,5 +27,34 @@
             Recent
         </a>
     </p>
+    {% if not posts %}
+        <section class="tile is-parent">
+                <div class="tile is-child notification is-info not-member-parent">
+                    <div class="card not-member-card">
+                        <div class="card-content">
+                            <p>{{ post.created_at }}</p>
+                            <p>{{ post.title }}</p>
+                            <p class="title" id="card_title">
+                            {{ post.post }}
+                            </p>
+                            <p class="subtitle not-member-message">
+                                Currently no posts on this subreddit, feel free to be the first.
+                                <br/>
+                                <br />
+                                <i class="fas fa-asterisk animate__animated animate__rotateIn not-member-asterisk"></i>
+                            </p>
+                        </div>
+                        <footer class="card-footer">
+                            <p class="card-footer-item">
+                                <span></span>
+                            </p>
+                            <p class="card-footer-item">
+                                <span><br/></span>
+                            </p>
+                        </footer>
+                    </div>
+                </div>
+            </section>
+    {% endif %}
 </div>
 {% endblock content %}
