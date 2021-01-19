@@ -91,12 +91,6 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
   $( function() {
-    //   for (const key in object) {
-    //       if (Object.hasOwnProperty.call(object, key)) {
-    //           const element = object[key];
-              
-    //       }
-    //   }
     let tagString = ["{% for subreddit in search_subreddits %} {{ subreddit.title }} {% endfor %}"]    
     let tagArr = tagString[0].split(' ')
     let availableTags = tagArr.filter((tag) => tag != "")
