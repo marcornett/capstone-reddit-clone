@@ -12,9 +12,9 @@ def user_profile_view(request, username):
     user = RedditUser.objects.get(username=username)
     form = UpdateUserForm()
     user_posts = Post.objects.filter(
-        user=request.user).order_by("created_at").reverse() 
+        user=user).order_by("created_at").reverse() 
     sort_by = 'recent'
-    joined = Subreddit.objects.filter(members=request.user)
+    joined = Subreddit.objects.filter(members=user)
     subreddit_filter = subreddit_search(request)
     if request.method == 'POST':
         form = UpdateUserForm(request.POST, request.FILES)
