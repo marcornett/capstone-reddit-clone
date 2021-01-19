@@ -10,6 +10,13 @@ body{
     margin-right: 15%;
 }
 
+#profile-page{
+    margin-top: 2%;
+    margin-left: 15%;
+    margin-right: 15%;
+    margin-bottom: 200px;
+}
+
 .profile-panel{
     height: 100%;
 }
@@ -90,3 +97,12 @@ body{
 .search-button{
     margin-top: 8px;
 }
+
+#search_text{
+    color: white;
+}
+
+#results-subreddits{
+    margin-left: 200px;
+}
+

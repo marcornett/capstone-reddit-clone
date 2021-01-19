@@ -15,7 +15,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         print('Retrieving...')
-        for i in range(1, 301):
+        for i in range(1, 30):
             ids_to_grab = random.randint(1, 45)
             if i % 6 == 0:
                 # image
@@ -47,9 +47,5 @@ class Command(BaseCommand):
                 )
                 post.comments.add(PostComment.objects.get(id=i))
         self.stdout.write(
-            self.style.SUCCESS('Successfully created 300 posts.')
+            self.style.SUCCESS('Successfully created 30 posts.')
         )
-
-    # image = models.ImageField(upload_to='images/')
-    # up_vote = models.ManyToManyField(RedditUser, related_name="up_vote")
-    # down_vote = models.ManyToManyField(RedditUser, related_name="down_vote")
