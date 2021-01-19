@@ -56,9 +56,12 @@
             </section>
         {% endif %}
         {% if subreddits %}
-            <section class="tile is-3 is-vertical is-parent subreddit-panel">
+            {% if request.path == '/' %}
+                <section class="tile is-3 is-vertical is-parent">
                 {% include 'authentication/sidebar.html' %}
-            </section>
+                </section>
+            {% endif %}
+            
         {% endif %}
     </main>
     <footer class="footer">

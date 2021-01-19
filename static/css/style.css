@@ -13,6 +13,9 @@ body{
 .profile-panel{
     height: 100%;
 }
+#side-full{
+    width: 100%;
+}
 
 .subreddit-panel{
     height: 100%;
@@ -72,4 +75,12 @@ body{
 
 .not-member-asterisk{
     color: #3298dc;
+}
+
+
+.glow{
+    color: #00d1b2;
+    border: 1px solid #00d1b2;
+    border-radius: 30px;
+    box-shadow: 0 0 20px #00d1b2;
 }

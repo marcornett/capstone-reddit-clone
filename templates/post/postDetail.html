@@ -1,57 +1,240 @@
 {% extends 'main.html' %}
 {% block content %}
-{% if post.title %}
-    <h1>{{ post.title }}</h1>
-{% endif %}
-<h3>by {{ post.user }}</h3>
-<a href="{% url 'subreddit' post.subreddit.title 'recent' %}">
-    <h3>{{ post.subreddit.title }}</h3>
-</a>
+<section id="main" class="tile is-ancestor">
+    <div class="tile is-parent">
+        <div class="tile is-child notification is-info">
+            
+            {% if post.post %}
+            <div class="card">
+                <div>
+                    <div class="card-content">
+                        <p>{{ post.created_at }}</p>
+                        <p>{{ post.title }}</p>
+                        <p class="title" id="card_title">
+                        {{ post.post }}
+                        </p>
+                        <p class="subtitle">
+                            <a href='/user/{{post.user.username}}'>{{post.user}}</a>
+                            in
+                            <a href="{% url 'subreddit' post.subreddit.title 'recent' %}">
+                                rc/{{ post.subreddit.title }}
+                            </a>
+                        </p>
+                    </div>
+                    <footer class="card-footer">
+                        <p class="card-footer-item">
+                        <span>
+                            <a href="{% url 'post_detail' post.id %}">View</a>
+                        </span>
+                        </p>
+                            {% if request.user.is_authenticated %}
+                                <form method='post' action='/posts/like_dis_post/{{post.id}}/Like/' enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="next" value="{{ request.path }}">
+                                    <input type="submit" value="Like">
+                                </form>
+                                <form method='post' action='/posts/like_dis_post/{{post.id}}/Dislike/' enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="next" value="{{ request.path }}">
+                                    {{ post.getPopularity }}
+                                    <input type='submit' value="Dislike">
+                                </form>
+                                
+                            {% endif %}
+                    </footer>
+                </div>
+                <div>
+                    {% comment %} Admin or current user delete {% endcomment %}
+                    {% if request.user == post.user or request.user.is_staff %}
+                    <form method='post' action='/posts/delete_post/{{ post.id }}/' enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input type="hidden" name="next" value="{{ request.path }}">
+                        <input type='submit' value='X' id="delete-button" class="button is-danger is-outlined s-small is-fullwidth">
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+            <br/>
 
-{% if request.user.is_authenticated %}
-    <form method='post' action='/posts/like_dis_post/{{post.id}}/Like/' enctype="multipart/form-data">
-        {% csrf_token %}
-        <input type="hidden" name="next" value="{{ request.path }}">
-        <input type="submit" value="Like">
-    </form>
-    <form method='post' action='/posts/like_dis_post/{{post.id}}/Dislike/' enctype="multipart/form-data">
-        {% csrf_token %}
-        <input type="hidden" name="next" value="{{ request.path }}">
-        <input type='submit' value="Dislike">
-    </form>
-    {{ post.getPopularity }}
-{% endif %}
-<hr>
+        {% comment %} Title/link type Post {% endcomment %}
+        {% elif post.link %}
+            <div class="card">
+                <div>
+                    <div class="card-content">
+                        <p>{{ post.created_at }}</p>
+                        <p>{{ post.title }}</p>
+                        <p class="title" id="card_title">
+                        <a href='{{post.link}}'>{{ post.link }}</a>
+                        </p>
+                        <p class="subtitle">
+                            <a href='/user/{{post.user.username}}'>{{post.user}}</a>
+                            in
+                            <a href="{% url 'subreddit' post.subreddit.title 'recent' %}">
+                                rc/{{ post.subreddit.title }}
+                            </a>
+                        </p>
+                    </div>
+                    <footer class="card-footer">
+                        <p class="card-footer-item">
+                        <span>
+                            <a href="{% url 'post_detail' post.id %}">View</a>
+                        </span>
+                        </p>
+                            {% if request.user.is_authenticated %}
+                                <form method='post' action='/posts/like_dis_post/{{post.id}}/Like/' enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="next" value="{{ request.path }}">
+                                    <input type="submit" value="Like">
+                                </form>
+                                <form method='post' action='/posts/like_dis_post/{{post.id}}/Dislike/' enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="next" value="{{ request.path }}">
+                                    {{ post.getPopularity }}
+                                    <input type='submit' value="Dislike">
+                                </form>
+                                
+                            {% endif %}
+                    </footer>
+                </div>
+                <div>
+                    {% comment %} Admin or current user delete {% endcomment %}
+                    {% if request.user == post.user or request.user.is_staff %}
+                    <form method='post' action='/posts/delete_post/{{ post.id }}/' enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input type="hidden" name="next" value="{{ request.path }}">
+                        <input type='submit' value='X' id="delete-button" class="button is-danger is-outlined s-small is-fullwidth">
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+            <br/>
 
-<!-- Checks for type of post and displays it -->
-{% if post.post %}
-    <p>{{ post.post }}</p>
-{% elif post.link %}
-    <a href='{{post.link}}'>{{ post.link }}</a>
-{% elif post.image %}
-    <img src='{{post.image.url}}'>
-{% endif %}
+        {% comment %} Title/image type Post {% endcomment %}
+        {% elif post.image %}
+            <div class="card">
+                <div>
+                    <div class="card-content">
+                        <p>{{ post.created_at }}</p>
+                        {% if post.title %}
+                            <p>{{ post.title }}</p>
+                        {% endif %}
+                        <p class="title" id="card_title">
+                        <img src='{{ post.image.url }}'>
+                        </p>
+                        <p class="subtitle">
+                            <a href='/user/{{post.user.username}}'>{{post.user}}</a>
+                            in
+                            <a href="{% url 'subreddit' post.subreddit.title 'recent' %}">
+                                rc/{{ post.subreddit.title }}
+                            </a>
+                        </p>
+                    </div>
+                    <footer class="card-footer">
+                        <p class="card-footer-item">
+                        <span>
+                            <a href="{% url 'post_detail' post.id %}">View</a>
+                        </span>
+                        </p>
+                            {% if request.user.is_authenticated %}
+                                <form method='post' action='/posts/like_dis_post/{{post.id}}/Like/' enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="next" value="{{ request.path }}">
+                                    <input type="submit" value="Like">
+                                </form>
+                                <form method='post' action='/posts/like_dis_post/{{post.id}}/Dislike/' enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="next" value="{{ request.path }}">
+                                    {{ post.getPopularity }}
+                                    <input type='submit' value="Dislike">
+                                </form>
+                                
+                            {% endif %}
+                    </footer>
+                </div>
+                <div>
+                    {% comment %} Admin or current user delete {% endcomment %}
+                    {% if request.user == post.user or request.user.is_staff %}
+                    <form method='post' action='/posts/delete_post/{{ post.id }}/' enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input type="hidden" name="next" value="{{ request.path }}">
+                        <input type='submit' value='X' id="delete-button" class="button is-danger is-outlined s-small is-fullwidth">
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+            <br/>
+        {% endif %}
 
-{% if request.user == post.user or request.user.is_staff %}
-    <form method='post' action='/posts/delete_post/{{ post.id }}/' enctype="multipart/form-data">
-        {% csrf_token %}
-        <input type='submit' value='X'>
-    </form>
-{% endif %}
-<hr>
-
-<h2> Comments </h2>
-<hr>
-{% for comment in comments %}
-    <h3>{{ comment.user }}</h3>
-    <h4><a href='/posts/like_dis_comment/{{comment.id}}/{{post.id}}/Like/'>Like {{ comment.up_vote.count }}</a></h4>
-    <h4><a href='/posts/like_dis_comment/{{comment.id}}/{{post.id}}/Dislike/'>Dislike {{comment.down_vote.count }}</a></h4>
-    <p>{{ comment.message }}</p>
-    <hr>
-{% endfor %}
-<form method='post' action='/posts/addcomment/{{post.id}}/' enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type='submit' value='Add Comment'>
-</form>
+            {% comment %} Comments {% endcomment %}
+            <h2 class="subtitle"> Comments </h2>
+            {% for comment in comments %}
+                <article class="media">
+                    <figure class="media-left">
+                        <p class="image is-64x64">
+                        <img src="{{ comment.user.image.url }}">
+                        </p>
+                    </figure>
+                    <div class="media-content">
+                        <div class="content">
+                        <p>
+                            <strong>{{ comment.user }}</strong> 
+                                <small>{{ comment.created_at }}</small>
+                            <br>
+                            {{ comment.message }}
+                            <br>
+                            <span class="">
+                                {% if request.user.is_authenticated %}
+                                    <a href='/posts/like_dis_comment/{{comment.id}}/{{post.id}}/Like/'>Like</a>
+                                {% endif %}
+                                {{ comment.getPopularity }}
+                                {% if request.user.is_authenticated %}
+                                    <a href='/posts/like_dis_comment/{{comment.id}}/{{post.id}}/Dislike/'>Dislike</a>
+                                {% endif %}
+                            </span>
+                        </p>
+                        </div>
+                        <nav class="level is-mobile">
+                        <div class="level-left">
+                            <a class="level-item">
+                            
+                            </a>
+                        </div>
+                        </nav>
+                    </div>
+                    </article>
+            {% endfor %}
+            
+                {% comment %} Add comment form {% endcomment %}
+                <form method='post' action='/posts/addcomment/{{post.id}}/' enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <article class="media">
+                        <figure class="media-left">
+                            <p class="image is-64x64">
+                            <img src="{{ request.user.image.url }}">
+                            </p>
+                        </figure>
+                        <div class="media-content">
+                            <div class="field">
+                                <p class="control">
+                                    {{ form.message }}
+                                </p>
+                            </div>
+                            <nav class="level">
+                                <div class="level-left">
+                                    <div class="level-item">
+                                    <input class="button" type='submit' value='Add Comment'>
+                                    </div>
+                                </div>
+                            </nav>
+                        </div>
+                    </article>
+                </form>
+        </div>
+    </div>
+    {% if subreddits %}
+        <section class="tile is-3 is-vertical is-parent subreddit-panel">
+            {% include 'authentication/sidebar.html' %}
+        </section>
+    {% endif %}
+</section>
 {% endblock %}
