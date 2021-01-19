@@ -1,31 +1,41 @@
 {% extends 'main.html' %}
 {% block content %}
 <div>
-    <h1>{{ subreddit.title }}</h3>
-        {% if request.user.is_authenticated %}
-            <a href="{% url 'subscribe_subreddit' subreddit.id %}">
-                {% if is_member %}
-                    <button type="button">Leave</button>
-                {% else %}
-                    <button type="button">Join</button>
-                {% endif %}
-            </a>    
-        {% endif %}
-    <p>About: {{ subreddit.about }}</p>
-    <p>Created at: {{ subreddit.created_at }}</p>
-    <div>
-        <span>{{ members|length }}</span>
-        <br/>
-        <span>Members</span>
+    <div class="container is-fluid">
+        <div class="notification is-primary">
+            {% if request.user.is_authenticated %}
+                <a href="{% url 'subscribe_subreddit' subreddit.id %}">
+                    {% if is_member %}
+                        <button class="button is-warning" type="button">Leave</button>
+                    {% else %}
+                        <button class="button" type="button">Join</button>
+                    {% endif %}
+                </a>    
+            {% endif %}
+            <p>Made {{ subreddit.created_at }}</p>
+            <h1 class="title">{{ subreddit.title }}</h1>
+            <h2 class="subtitle">About:</h2>
+            "<strong><span id="search_text">{{ subreddit.about }}</span></strong>"
+            <div>
+                <h2 class="subtitle">Members: 
+                    <strong><span id="search_text">{{ members|length }}</span></strong>
+                </h2>
+                
+            </div>
+        </div>
+        
     </div>
-    <p>
-        Sort by: 
+    <br />
+    <div class="container">
+        <div class="notification is-primary">
+            Sort by: 
         <a href='/subreddit/page/{{subreddit.title}}/trending'>
             Trending
         </a>   
         <a href='/subreddit/page/{{subreddit.title}}/recent'>
             Recent
         </a>
-    </p>
+        </div>
+    </div>
 </div>
 {% endblock content %}

@@ -1,9 +1,13 @@
 {% extends 'main.html' %}
 {% block content %}
 <div>
-    <h2>From your search...</h2>
-    <span id="search_text"></span>
     
+    <div class="container is-fluid">
+        <div class="notification is-primary">
+            <h2 class="subtitle">From your search... "<strong><span id="search_text"></span></strong>"</h2>
+            
+        </div>
+    </div>
     {% if subreddits %}
         <ul>
             {% for subreddit in subreddits %}

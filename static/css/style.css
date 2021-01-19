@@ -90,3 +90,7 @@ body{
 .search-button{
     margin-top: 8px;
 }
+
+#search_text{
+    color: white;
+}
