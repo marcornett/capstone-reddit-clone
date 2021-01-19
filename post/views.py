@@ -4,6 +4,10 @@ from post.forms import CreateComment, CreateImagePost, CreateLinkPost, CreateMes
 from post.models import Post, PostComment
 from post.helper import newPost
 from subreddit.helper import random_subreddits, subreddit_search
+from subreddit.models import Subreddit
+
+if Subreddit.objects.all():
+    search_subreddits = Subreddit.objects.all()
 
 
 @login_required()
@@ -32,10 +36,10 @@ def createPost(request, postType):
         form = CreateImagePost()
     context = {
         'form': form,
-        'subreddit_filter': subreddit_filter
+        'subreddit_filter': subreddit_filter,
+        'search_subreddits': search_subreddits
     }
     return render(request, 'post/createpost.html', context)
-
 
 
 def postDetail(request, post_id):
@@ -49,7 +53,8 @@ def postDetail(request, post_id):
         'post': cur_post,
         'comments': comments,
         'subreddits': subreddits,
-        'subreddit_filter': subreddit_filter
+        'subreddit_filter': subreddit_filter,
+        'search_subreddits': search_subreddits
         }
     return render(request, 'post/postDetail.html', context)
 
@@ -62,8 +67,8 @@ def addComment(request, post_id):
         if form.is_valid():
             data = form.cleaned_data
             new_comment = PostComment.objects.create(
-                user = request.user,
-                message = data['message'],
+                user=request.user,
+                message=data['message'],
             )
             cur_post.comments.add(new_comment)
             return HttpResponseRedirect(reverse('post_detail', kwargs={'post_id':post_id}))

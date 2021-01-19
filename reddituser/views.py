@@ -7,6 +7,9 @@ from post.models import Post
 from subreddit.models import Subreddit
 from subreddit.helper import subreddit_search
 
+if Subreddit.objects.all():
+    search_subreddits = Subreddit.objects.all()
+
 
 def user_profile_view(request, username):
     user = RedditUser.objects.get(username=username)
@@ -32,7 +35,8 @@ def user_profile_view(request, username):
         'user_posts': user_posts,
         'sort_by': sort_by,
         'joined': joined,
-        'subreddit_filter': subreddit_filter
+        'subreddit_filter': subreddit_filter,
+        'search_subreddits': search_subreddits
         }
     return render(request, 'reddituser/user_profile.html', context)
 

@@ -36,11 +36,10 @@
                                 <form method='post' action='/posts/like_dis_post/{{post.id}}/Dislike/' enctype="multipart/form-data">
                                     {% csrf_token %}
                                     <input type="hidden" name="next" value="{{ request.path }}">
-                                    {{ post.getPopularity }}
                                     <input type='submit' value="Dislike">
                                 </form>
-                                
                             {% endif %}
+                            Likes: {{ post.getPopularity }}
                     </footer>
                 </div>
                 <div>
@@ -89,11 +88,10 @@
                                 <form method='post' action='/posts/like_dis_post/{{post.id}}/Dislike/' enctype="multipart/form-data">
                                     {% csrf_token %}
                                     <input type="hidden" name="next" value="{{ request.path }}">
-                                    {{ post.getPopularity }}
                                     <input type='submit' value="Dislike">
                                 </form>
-                                
                             {% endif %}
+                            Likes: {{ post.getPopularity }}
                     </footer>
                 </div>
                 <div>
@@ -144,11 +142,11 @@
                                 <form method='post' action='/posts/like_dis_post/{{post.id}}/Dislike/' enctype="multipart/form-data">
                                     {% csrf_token %}
                                     <input type="hidden" name="next" value="{{ request.path }}">
-                                    {{ post.getPopularity }}
                                     <input type='submit' value="Dislike">
                                 </form>
                                 
                             {% endif %}
+                            Likes: {{ post.getPopularity }}
                     </footer>
                 </div>
                 <div>
@@ -177,7 +175,9 @@
                     <div class="media-content">
                         <div class="content">
                         <p>
-                            <strong>{{ comment.user }}</strong> 
+                            <a href="/user/{{ comment.user }}">
+                                <strong>{{ comment.user }}</strong> 
+                            </a>
                                 <small>{{ comment.created_at }}</small>
                             <br>
                             {{ comment.message }}
@@ -185,11 +185,9 @@
                             <span class="">
                                 {% if request.user.is_authenticated %}
                                     <a href='/posts/like_dis_comment/{{comment.id}}/{{post.id}}/Like/'>Like</a>
-                                {% endif %}
-                                {{ comment.getPopularity }}
-                                {% if request.user.is_authenticated %}
                                     <a href='/posts/like_dis_comment/{{comment.id}}/{{post.id}}/Dislike/'>Dislike</a>
                                 {% endif %}
+                                Likes: {{ comment.getPopularity }}
                             </span>
                         </p>
                         </div>
@@ -205,30 +203,32 @@
             {% endfor %}
             
                 {% comment %} Add comment form {% endcomment %}
-                <form method='post' action='/posts/addcomment/{{post.id}}/' enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <article class="media">
-                        <figure class="media-left">
-                            <p class="image is-64x64">
-                            <img src="{{ request.user.image.url }}">
-                            </p>
-                        </figure>
-                        <div class="media-content">
-                            <div class="field">
-                                <p class="control">
-                                    {{ form.message }}
+                {% if request.user.is_authenticated %}
+                    <form method='post' action='/posts/addcomment/{{post.id}}/' enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <article class="media">
+                            <figure class="media-left">
+                                <p class="image is-64x64">
+                                <img src="{{ request.user.image.url }}">
                                 </p>
-                            </div>
-                            <nav class="level">
-                                <div class="level-left">
-                                    <div class="level-item">
-                                    <input class="button" type='submit' value='Add Comment'>
-                                    </div>
+                            </figure>
+                            <div class="media-content">
+                                <div class="field">
+                                    <p class="control">
+                                        {{ form.message }}
+                                    </p>
                                 </div>
-                            </nav>
-                        </div>
-                    </article>
-                </form>
+                                <nav class="level">
+                                    <div class="level-left">
+                                        <div class="level-item">
+                                        <input class="button" type='submit' value='Add Comment'>
+                                        </div>
+                                    </div>
+                                </nav>
+                            </div>
+                        </article>
+                    </form>
+                {% endif %}
         </div>
     </div>
     {% if subreddits %}

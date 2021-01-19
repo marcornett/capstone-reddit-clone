@@ -1,21 +1,67 @@
 {% extends 'main.html' %}
 {% block content %}
-<div>
-    <h2>From your search...</h2>
-    <span id="search_text"></span>
     
+{% comment %}  {% endcomment %}
+{% comment %}  {% endcomment %}
+{% comment %}  {% endcomment %}
+{% comment %}  {% endcomment %}
+    <div>
+        <div class="container is-fluid">
+        <div class="notification is-primary">
+            <h2 class="title">From your search... "<strong><span id="search_text"></span></strong>"</h2>
+        </div>
+    </div>
     {% if subreddits %}
         <ul>
+            <div class="tile is-ancestor" style="margin-left: 20px; margin-right: 20px;">
             {% for subreddit in subreddits %}
-            <li>
-                <a href="{% url 'subreddit'  subreddit.title 'recent' %}">rc/{{ subreddit.title }}</a>
-                <div>{{ subreddit.members|length}} Members</div>
-                <div>{{ subreddit.about }}</div>
-            </li>
+                <div class="tile is-parent">
+                    <article class="tile is-child box">
+                    <p class="title">
+                        <a href="{% url 'subreddit'  subreddit.title 'recent' %}">rc/{{ subreddit.title }}</a>
+                    </p>
+                    <p class="subtitle">
+                        {{ subreddit.members.count }} Members
+                    </p>
+                    <p class="subtitle">
+                        About:
+                        <br/>
+                        {{ subreddit.about|slice:31 }}...
+                    </p>
+                    </article>
+                </div>
             {% endfor %}
+            </div>
         </ul>
     {% else %}
-        <h3>Nothing to see here...</h3>
+
+        <section class="tile is-parent">
+                <div class="tile is-child notification is-info not-member-parent">
+                    <div class="card not-member-card">
+                        <div class="card-content">
+                            <p>{{ post.created_at }}</p>
+                            <p>{{ post.title }}</p>
+                            <p class="title" id="card_title">
+                            {{ post.post }}
+                            </p>
+                            <p class="subtitle not-member-message">
+                                Unfortunately, nothing matched...
+                                <br/>
+                                <br />
+                                <i class="fas fa-asterisk animate__animated animate__rotateIn not-member-asterisk"></i>
+                            </p>
+                        </div>
+                        <footer class="card-footer">
+                            <p class="card-footer-item">
+                                <span></span>
+                            </p>
+                            <p class="card-footer-item">
+                                <span><br/></span>
+                            </p>
+                        </footer>
+                    </div>
+                </div>
+            </section>
     {% endif %}
     <script>
         let searchInput = document.getElementById('id_title')

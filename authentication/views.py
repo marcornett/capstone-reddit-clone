@@ -7,6 +7,9 @@ from django.contrib import messages
 from subreddit.helper import random_subreddits, subreddit_search
 from post.models import Post
 
+if Subreddit.objects.all():
+    search_subreddits = Subreddit.objects.all()
+
 
 class IndexView(View):
     def get(self, request):
@@ -42,8 +45,11 @@ class IndexView(View):
 class SignUpView(View):
     def get(self, request):
         form = SignUpForm()
+        subreddit_filter = subreddit_search(request)
         context = {
-            'form': form
+            'form': form,
+            'subreddit_filter': subreddit_filter,
+            'search_subreddits': search_subreddits
         }
         return render(
             request, 'authentication/signupform.html', context
@@ -70,7 +76,13 @@ class LoginView(View):
     def get(self, request):
         form = LoginForm()
         title = 'Login'
-        context = {'form': form, 'title': title}
+        subreddit_filter = subreddit_search(request)
+        context = {
+            'form': form, 
+            'title': title,
+            'subreddit_filter': subreddit_filter,
+            'search_subreddits': search_subreddits
+            }
         return render(
             request, 'authentication/generic_form.html', context
         )

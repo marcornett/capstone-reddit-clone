@@ -6,6 +6,8 @@ from post.models import Post
 from subreddit.helper import random_subreddits, subreddit_search
 import random
 
+if Subreddit.objects.all():
+    search_subreddits = Subreddit.objects.all()
 
 def subreddit_view(request, title, sort_by):
     subreddit = Subreddit.objects.get(title=title)
@@ -28,7 +30,8 @@ def subreddit_view(request, title, sort_by):
         'posts': posts,
         'sort_by': sort_by,
         'is_member': is_member,
-        'subreddit_filter': subreddit_filter
+        'subreddit_filter': subreddit_filter,
+        'search_subreddits': search_subreddits
         }
     return render(request, 'subreddit/subreddit.html', context)
 
@@ -49,7 +52,8 @@ def subreddit_creation_view(request):
     context = {
         'form': form, 
         'title': title,
-        'subreddit_filter': subreddit_filter
+        'subreddit_filter': subreddit_filter,
+        'search_subreddits': search_subreddits
         }
     return render(request, 'subreddit/createsubreddit.html', context)
 
@@ -67,7 +71,8 @@ def subreddit_search_view(request):
     context = {
         'subreddits': subreddits,
         'subreddit_filter': subreddit_filter,
-        'posts': posts
+        'posts': posts,
+        'search_subreddits': search_subreddits
         }
     return render(request, 'subreddit/search.html', context)
 
