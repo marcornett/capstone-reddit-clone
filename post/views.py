@@ -43,6 +43,7 @@ def createPost(request, postType):
 
 
 def postDetail(request, post_id):
+    # breakpoint()
     cur_post = Post.objects.get(id=post_id)
     comments = cur_post.comments.all()
     form = CreateComment()
@@ -79,9 +80,10 @@ def delete_post_view(request, post_id):
     post = Post.objects.get(id=post_id)
     title = post.subreddit.title
     post.delete()
-    if request.POST.get('next'):
-        next = request.POST.get('next')
-        return redirect(next)
+    if 'postdetail' not in request.POST.get('next'):
+        if request.POST.get('next'):
+            next = request.POST.get('next')
+            return redirect(next)
     return redirect(f'/subreddit/page/{title}/recent')
 
 

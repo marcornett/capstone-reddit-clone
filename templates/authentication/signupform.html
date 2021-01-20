@@ -1,25 +1,73 @@
 {% extends 'main.html' %}
 {% block content %}
-<h2>Sign Up</h2>
-<form action="" method="post">
-    {% csrf_token %}
-    {{form.username}}
-    {{form.email}}
-    {{form.password1}}
-    {{form.password2}}
-    <input type="submit" value="Submit">
-</form>
+<div class="signup-form">
+    <div style="margin-bottom: 120px;"></div>
+    <h1 class="title">Sign Up</h1>
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="field">
+            <div class="field">
+                <label class="label">Username</label>
+                <div class="control has-icons-left has-icons-right">
+                    {{form.username}}
+                    <span class="icon is-small is-left">
+                    <i class="fas fa-user" style="margin-top:15px;"></i>
+                    </span>
+                </div>
+            </div>
 
-{{form.errors}}
+            <div class="field">
+                <label class="label">Email</label>
+                <div class="control has-icons-left has-icons-right">
+                    {{form.email}}
+                    <span class="icon is-small is-left">
+                    <i class="fas fa-envelope" style="margin-top:15px;"></i>
+                    </span>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label">Password</label>
+                <div class="control has-icons-left has-icons-right">
+                    {{form.password1}}
+                    <span class="icon is-small is-left">
+                    <i class="fas fa-key" style="margin-top:15px;"></i>
+                    </span>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label">Password</label>
+                <div class="control has-icons-left has-icons-right">
+                    {{form.password2}}
+                    <span class="icon is-small is-left">
+                    <i class="fas fa-key" style="margin-top:15px;"></i>
+                    </span>
+                </div>
+            </div>
+
+            <div class="field is-grouped">
+            <div class="control">
+                <input class="button" type="submit" value="Submit" style="margin-left: -1px;">
+            </div>
+        </div>
+    </form>
+    {{form.errors}}
+    <div style="margin-bottom: 200px;"></div>
+</div>
 
 <script>
     let usernameField = document.getElementById('id_username')
     usernameField.placeholder = "Username"
+    usernameField.className ="input"
     let emailField = document.getElementById('id_email')
     emailField.placeholder = "Email"
+    emailField.className ="input"
     let passwordField1 = document.getElementById('id_password1')
     passwordField1.placeholder = "Enter password"
+    passwordField1.className ="input"
     let passwordField2 = document.getElementById('id_password2')
     passwordField2.placeholder = "Re-enter password"
+    passwordField2.className ="input"
 </script>
 {% endblock %}

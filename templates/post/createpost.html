@@ -1,36 +1,145 @@
 {% extends 'main.html' %}
 {% block content %}
 <div>
-    <ul>
-        <li><a href="/posts/createpost/message">Create Text Post</a></li>
-        <li><a href="/posts/createpost/link">Create URL Post</a></li>
-        <li><a href="/posts/createpost/image">Create Image Post</a></li>
-    </ul>
-    <form method='post' action='' enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.subreddit.label }}
-        {{ form.subreddit }}
-        {{ form.title }}
-        {{ form.post }}
-        {{ form.link }}
-        {{ form.image }}
+    <div class="signup-form">
+        <div style="margin-bottom: 120px;"></div>
+        <div class="post-options">
+            
+                {% if form.post %}
+                    <a href="/posts/createpost/message" style="flex-grow: 1;">
+                        <button class="button is-large is-fullwidth" disabled>Text</button>
+                    
+                {% else %}
+                    <a href="/posts/createpost/message">
+                        <button class="button is-large is-fullwidth">Text</button>
+                    </a>
+                {% endif %}
+            
+            
+                {% if form.link %}
+                    <a href="/posts/createpost/link" style="flex-grow: 1;">
+                        <button class="button is-large is-fullwidth" disabled>URL</button>
+                    </a>
+                {% else %}
+                    <a href="/posts/createpost/link">
+                        <button class="button is-large is-fullwidth">URL</button>
+                    </a>
+                {% endif %}
+            
+            
+                {% if form.image %}
+                    <a href="/posts/createpost/image" style="flex-grow: 1;">
+                        <button class="button is-large is-fullwidth" disabled>Image</button>
+                    </a>
+                {% else %}
+                    <a href="/posts/createpost/image">
+                        <button class="button is-large is-fullwidth">Image</button>
+                    </a>
+                {% endif %}
+        </div>
         
-        <input type='submit' value='Post'>
-    </form>
+        <h1 class="title">{{ title }}</h1>
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="field">
+                {{ form.subreddit.label }}
+                <div class="control">
+                    <div class="select">
+                    {{ form.subreddit }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label">Title</label>
+                <div class="control">
+                    {{ form.title }}
+                </div>
+            </div>
+
+            {% if form.post %}
+                <div class="field">
+                    <label class="label">Message</label>
+                    <div class="control">
+                        {{ form.post }}
+                    </div>
+                </div>
+            {% endif %}
+
+            {% if form.link %}
+                <div class="field">
+                    <label class="label">URL</label>
+                    <div class="control">
+                        {{ form.link }}
+                    </div>
+                </div>
+            {% endif %}
+            
+            {% if form.image %}
+                <div class="field">
+                    <label class="label">IMG</label>
+                    <div class="control">
+                        
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="file is-primary">
+                        <label class="file-label">
+                        {{ form.image }}
+                        <span class="file-cta">
+                            <span class="file-icon">
+                            <i class="fas fa-upload"></i>
+                            </span>
+                            <span class="file-label">
+                            Primary file…
+                            </span>
+                        </span>
+                        </label>
+                    </div>
+                </div>
+            {% endif %}
+
+            <div class="field is-grouped">
+                <div class="control">
+                    <input class="button" type="submit" value="Post" style="margin-left: -1px;">
+                </div>
+            </div>
+        </form>
+        {% if messages %}
+            {% for message in messages %}
+            <p>Notice: {{ message }}</p>
+            {% endfor %}
+        {% endif %}
+        <div style="margin-bottom: 300px;"></div>
+    </div>
 
     <script>
+    
+        let subredditField = document.getElementById('id_subreddit')
+        if(subredditField !== null){
+            
+        }
         let titleField = document.getElementById('post_input')
         if(titleField !== null){
             titleField.placeholder = "Title"
+            titleField.className = "input"
         }
         let postField = document.getElementById('id_post')
         if(postField !== null){
-            postField.placeholder = "Text(required)"
+            postField.placeholder = "Text (required)"
+            postField.className = "textarea"
         }
         let linkField = document.getElementById('id_link')
         if(linkField !== null){
             linkField.placeholder = "Link"
+            linkField.className = "input"
         }
+        let imageField = document.getElementById('id_image')
+        if(imageField !== null){
+            imageField.className = "file-input"
+        }
+        
     </script>
 </div>
 

@@ -1,21 +1,52 @@
 {% extends 'main.html' %}
 {% block content %}
-<h2>{{ title }}</h2>
-<form action="" method="post">
-    {% csrf_token %}
-    {{ form.username }}
-    {{ form.password }}
-    <input type="submit" value="Submit">
-</form>
-{% if messages %}
-    {% for message in messages %}
+
+<div class="signup-form">
+    <div style="margin-bottom: 180px;"></div>
+    <h1 class="title">{{ title }}</h1>
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="field">
+            <div class="field">
+                <label class="label">Username</label>
+                <div class="control has-icons-left has-icons-right">
+                    {{form.username}}
+                    <span class="icon is-small is-left">
+                    <i class="fas fa-user" style="margin-top:15px;"></i>
+                    </span>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label">Password</label>
+                <div class="control has-icons-left has-icons-right">
+                    {{form.password}}
+                    <span class="icon is-small is-left">
+                    <i class="fas fa-key" style="margin-top:15px;"></i>
+                    </span>
+                </div>
+            </div>
+
+            <div class="field is-grouped">
+            <div class="control">
+                <input class="button" type="submit" value="Submit" style="margin-left: -1px;">
+            </div>
+        </div>
+    </form>
+    {% if messages %}
+        {% for message in messages %}
         <p>Notice: {{ message }}</p>
-    {% endfor %}
-{% endif %}
+        {% endfor %}
+    {% endif %}
+    <div style="margin-bottom: 300px;"></div>
+</div>
+
     <script>    
         let usernameField = document.getElementById('id_username')
         usernameField.placeholder = "Username"
+        usernameField.className ="input"
         let passwordField = document.getElementById('id_password')
         passwordField.placeholder = "Enter password"
+        passwordField.className ="input"
     </script>
 {% endblock %}
