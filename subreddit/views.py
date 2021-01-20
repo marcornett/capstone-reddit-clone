@@ -13,7 +13,8 @@ def subreddit_view(request, title, sort_by):
     subreddit = Subreddit.objects.get(title=title)
     posts = list()
     if sort_by == 'trending':
-        post_list = list(Post.objects.all())
+        current_subreddit = Subreddit.objects.filter(title=title).first()
+        post_list = list(Post.objects.filter(subreddit=current_subreddit))
         post_list = sorted(post_list, key = lambda i: 0 if i.getPopularity() == 0 else -1 / i.getPopularity())
         posts = post_list
     else:

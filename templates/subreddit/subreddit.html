@@ -27,14 +27,22 @@
     </div>
     <br />
     <div class="container">
-        <div class="notification is-primary">
-            Sort by: 
-        <a href='/subreddit/page/{{subreddit.title}}/trending'>
-            Trending
-        </a>   
-        <a href='/subreddit/page/{{subreddit.title}}/recent'>
-            Recent
-        </a>
+        <div class="notification is-info" style="text-align: center;">
+        {% if sort_by == 'trending' %}
+            <strong>Trending</strong>
+        {% else %}
+            <a href='/subreddit/page/{{subreddit.title}}/trending'>
+                Trending
+            </a>
+        {% endif %}
+        <span> | </span>
+        {% if  sort_by == 'recent'%}
+            <strong>Recent</strong>
+        {% else %}
+            <a href='/subreddit/page/{{subreddit.title}}/recent'>
+                Recent
+            </a>
+        {% endif %}
         </div>
     </div>
     {% if not posts %}
