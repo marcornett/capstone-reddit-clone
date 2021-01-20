@@ -35,13 +35,17 @@
                             {% endif %}
                                 <p style="margin-top: 4px;">
                                 {% if post.getPopularity > 0 %}
-                                    <span style="color: #00d1b2;">
+                                <strong>
+                                    <span style="color: #00d1b2; margin-left: 10px; margin-right: 10px; font-size: 20px;">
                                         {{ post.getPopularity }}
                                     </span>
+                                </strong>
                                 {% elif post.getPopularity == 0 %}
+                                    <span style="margin-left: 10px; margin-right: 10px; font-size: 20px;">
                                     {{ post.getPopularity }}
+                                    </span>
                                 {% else %}
-                                    <span style="color: #f14668;">
+                                    <span style="color: #f14668; margin-left: 10px; margin-right: 10px; font-size: 20px;">
                                         {{ post.getPopularity }}
                                     </span>
                                 {% endif %}
@@ -101,13 +105,15 @@
                             {% endif %}
                                 <p style="margin-top: 4px;">
                                 {% if post.getPopularity > 0 %}
-                                    <span style="color: #00d1b2;">
+                                    <span style="color: #00d1b2; margin-left: 10px; margin-right: 10px; font-size: 20px;">
                                         {{ post.getPopularity }}
                                     </span>
                                 {% elif post.getPopularity == 0 %}
+                                    <span style="margin-left: 10px; margin-right: 10px; font-size: 20px;">
                                     {{ post.getPopularity }}
+                                    </span>
                                 {% else %}
-                                    <span style="color: #f14668;">
+                                    <span style="color: #f14668; margin-left: 10px; margin-right: 10px; font-size: 20px;">
                                         {{ post.getPopularity }}
                                     </span>
                                 {% endif %}
@@ -169,13 +175,15 @@
                             {% endif %}
                             <p style="margin-top: 2px; margin-right: 6px;">
                             {% if post.getPopularity > 0 %}
-                                <span style="color: #00d1b2;">
+                                <span style="color: #00d1b2; margin-left: 10px; margin-right: 10px; font-size: 20px;">
                                     {{ post.getPopularity }}
                                 </span>
                             {% elif post.getPopularity == 0 %}
-                                {{ post.getPopularity }}
+                                <span style="margin-left: 10px; margin-right: 10px; font-size: 20px;">
+                                    {{ post.getPopularity }}
+                                </span>
                             {% else %}
-                                <span style="color: #f14668;">
+                                <span style="color: #f14668; margin-left: 10px; margin-right: 10px; font-size: 20px;">
                                     {{ post.getPopularity }}
                                 </span>
                             {% endif %}
