@@ -1,19 +1,46 @@
 {% extends 'main.html' %}
 {% block content %}
-<div>
-    <h1>{{title}}</h1>
+<div class="signup-form">
+    <div style="margin-bottom: 180px;"></div>
+    <h1 class="title">{{ title }}</h1>
     <form action="" method="post">
         {% csrf_token %}
-        {{ form.title }}
-        {{ form.about }}
-        <input type="submit" value="Submit">
+        <div class="field">
+            <div class="field">
+                <label class="label">Title</label>
+                <div class="">
+                    {{ form.title }}
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label">About</label>
+                <div class="">
+                    {{ form.about }}
+                </div>
+            </div>
+
+            <div class="field is-grouped">
+            <div class="control">
+                <input class="button" type="submit" value="Submit" style="margin-left: -1px;">
+            </div>
+        </div>
     </form>
+    {% if messages %}
+        {% for message in messages %}
+        <p>Notice: {{ message }}</p>
+        {% endfor %}
+    {% endif %}
+    <div style="margin-bottom: 300px;"></div>
 </div>
+
     <script>    
         let titleField = document.getElementById('subreddit_input')
         titleField.placeholder = "Title"
+        titleField.className = "input"
         let aboutField = document.getElementById('id_about')
         aboutField.placeholder = "About Subreddit..."
+        aboutField.className = "input"
 
     </script>
 {% endblock %}
