@@ -1,10 +1,10 @@
 {% load static %}
 <aside class="tile is-child notification is-primary">
     {% if subreddits %}
-        <h3>Communities</h3>
+        <h3 class="subtitle">Communities</h3>
         <ul>
             {% for subreddit in subreddits %}
-            <li>
+            <li>- 
                 <a href="{% url 'subreddit' subreddit.title 'recent' %}">
                     rc/{{ subreddit.title }}
                 </a>

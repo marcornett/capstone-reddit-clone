@@ -45,7 +45,12 @@
                                 <div class="control">
                                     {{ form.bio }}
                             </div>
-                            <input class="button is-info" type='submit' value='Submit'>
+                            <input 
+                                class="button is-info" 
+                                type='submit' 
+                                value='Submit'
+                                style="margin-left: -1px;"
+                                >
                         </div>
                     </form>
                 {% endif %}
@@ -53,9 +58,11 @@
                         <div class="notification is-primary">
                             <h2 class="subtitle">Subscribed Channels</h2>
                             {% for subreddit in joined %}
-                                <a href="{% url 'subreddit' subreddit.title 'recent' %}">
-                                    <p>{{ subreddit.title }}</p>
-                                </a>
+                                <p>-
+                                    <a href="{% url 'subreddit' subreddit.title 'recent' %}">
+                                        {{ subreddit.title }}
+                                    </a>
+                                </p>
                             {% endfor %}
                         </div>
                     </div>
@@ -63,7 +70,11 @@
                 {% if request.user == user or request.user.is_staff %}
                     <form method='get' action='/user/{{user.username}}/delete' enctype="multipart/form-data">
                         {% csrf_token %}
-                        <input class="button is-danger is-fullwidth" type='submit' value='Delete Profile'>
+                        <input 
+                            class="button is-danger is-fullwidth" 
+                            type='submit' 
+                            value='Delete Profile'
+                            >
                     </form>
                 {% endif %}
             </div>
@@ -104,13 +115,27 @@
                                         <form method='post' action='/posts/like_dis_post/{{post.id}}/Like/' enctype="multipart/form-data">
                                             {% csrf_token %}
                                             <input type="hidden" name="next" value="{{ request.path }}">
-                                            <input type="submit" value="Like">
+                                            <input class="button is-primary is-inverted is-small" type="submit" value="Like">
                                         </form>
-                                        {{ post.getPopularity }}
+                                    {% endif %}
+                                        <p style="margin-top: 2px; margin-right: 6px;">
+                                        {% if post.getPopularity > 0 %}
+                                            <span style="color: #00d1b2;">
+                                                {{ post.getPopularity }}
+                                            </span>
+                                        {% elif post.getPopularity == 0 %}
+                                            {{ post.getPopularity }}
+                                        {% else %}
+                                            <span style="color: #f14668;">
+                                                {{ post.getPopularity }}
+                                            </span>
+                                        {% endif %}
+                                        </p>
+                                    {% if request.user.is_authenticated %}
                                         <form method='post' action='/posts/like_dis_post/{{post.id}}/Dislike/' enctype="multipart/form-data">
                                             {% csrf_token %}
                                             <input type="hidden" name="next" value="{{ request.path }}">
-                                            <input type='submit' value="Dislike">
+                                            <input class="button is-danger is-inverted is-small" type='submit' value="Dislike">
                                         </form>
                                     {% endif %}
                                 </footer>
@@ -156,14 +181,28 @@
                                         <form method='post' action='/posts/like_dis_post/{{post.id}}/Like/' enctype="multipart/form-data">
                                             {% csrf_token %}
                                             <input type="hidden" name="next" value="{{ request.path }}">
-                                            <input type="submit" value="Like">
+                                            <input class="button is-primary is-inverted is-small" type="submit" value="Like">
                                         </form>
+                                    {% endif %}
+                                        <p style="margin-top: 2px; margin-right: 6px;">
+                                        {% if post.getPopularity > 0 %}
+                                            <span style="color: #00d1b2;">
+                                                {{ post.getPopularity }}
+                                            </span>
+                                        {% elif post.getPopularity == 0 %}
+                                            {{ post.getPopularity }}
+                                        {% else %}
+                                            <span style="color: #f14668;">
+                                                {{ post.getPopularity }}
+                                            </span>
+                                        {% endif %}
+                                        </p>
+                                    {% if request.user.is_authenticated %}
                                         <form method='post' action='/posts/like_dis_post/{{post.id}}/Dislike/' enctype="multipart/form-data">
                                             {% csrf_token %}
                                             <input type="hidden" name="next" value="{{ request.path }}">
-                                            <input type='submit' value="Dislike">
+                                            <input class="button is-danger is-inverted is-small" type='submit' value="Dislike">
                                         </form>
-                                        {{ post.getPopularity }}
                                     {% endif %}
                                 </footer>
                             </div>
@@ -211,14 +250,28 @@
                                         <form method='post' action='/posts/like_dis_post/{{post.id}}/Like/' enctype="multipart/form-data">
                                             {% csrf_token %}
                                             <input type="hidden" name="next" value="{{ request.path }}">
-                                            <input type="submit" value="Like">
+                                            <input class="button is-primary is-inverted is-small" type="submit" value="Like">
                                         </form>
+                                    {% endif %}
+                                        <p style="margin-top: 2px; margin-right: 6px;">
+                                        {% if post.getPopularity > 0 %}
+                                            <span style="color: #00d1b2;">
+                                                {{ post.getPopularity }}
+                                            </span>
+                                        {% elif post.getPopularity == 0 %}
+                                            {{ post.getPopularity }}
+                                        {% else %}
+                                            <span style="color: #f14668;">
+                                                {{ post.getPopularity }}
+                                            </span>
+                                        {% endif %}
+                                        </p>
+                                    {% if request.user.is_authenticated %}
                                         <form method='post' action='/posts/like_dis_post/{{post.id}}/Dislike/' enctype="multipart/form-data">
                                             {% csrf_token %}
                                             <input type="hidden" name="next" value="{{ request.path }}">
-                                            <input type='submit' value="Dislike">
+                                            <input class="button is-danger is-inverted is-small" type='submit' value="Dislike">
                                         </form>
-                                        {{ post.getPopularity }}
                                     {% endif %}
                                     </p>
                                 </footer>

@@ -7,7 +7,8 @@ class CreateImagePost(forms.Form):
         max_length=50,
         widget=forms.TextInput(attrs={'id': 'post_input'}))
     image = forms.ImageField()
-    subreddit = forms.ModelChoiceField(queryset=Subreddit.objects.all())
+    subreddit = forms.ModelChoiceField(
+        queryset=Subreddit.objects.all().order_by('created_at').reverse())
 
 
 class CreateMessagePost(forms.Form):
@@ -17,7 +18,8 @@ class CreateMessagePost(forms.Form):
     post = forms.CharField(
         max_length=500,
         widget=forms.Textarea)
-    subreddit = forms.ModelChoiceField(queryset=Subreddit.objects.all())
+    subreddit = forms.ModelChoiceField(
+        queryset=Subreddit.objects.all().order_by('created_at').reverse())
 
 
 class CreateLinkPost(forms.Form):
@@ -26,7 +28,8 @@ class CreateLinkPost(forms.Form):
         widget=forms.TextInput(attrs={'id': 'post_input'}))
     link = forms.URLField(
         max_length=200)
-    subreddit = forms.ModelChoiceField(queryset=Subreddit.objects.all())
+    subreddit = forms.ModelChoiceField(
+        queryset=Subreddit.objects.all().order_by('created_at').reverse())
 
 
 class CreateComment(forms.Form):
