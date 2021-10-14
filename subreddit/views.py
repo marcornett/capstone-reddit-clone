@@ -11,7 +11,13 @@ if Subreddit.objects.all():
 
 def subreddit_view(request, title, sort_by):
     subreddit = Subreddit.objects.get(title=title)
+    subreddits = random_subreddits()
+    members_query = subreddit.members
+    members = members_query.all()
+    subreddit_filter = subreddit_search(request)
+    is_member = request.user in subreddit.members.all()
     posts = list()
+
     if sort_by == 'trending':
         current_subreddit = Subreddit.objects.filter(title=title).first()
         post_list = list(Post.objects.filter(subreddit=current_subreddit))
@@ -19,11 +25,7 @@ def subreddit_view(request, title, sort_by):
         posts = post_list
     else:
         posts = Post.objects.filter(subreddit=subreddit).order_by('created_at').reverse()
-    members_query = subreddit.members
-    members = members_query.all()
-    subreddits = random_subreddits()
-    subreddit_filter = subreddit_search(request)
-    is_member = request.user in subreddit.members.all()
+
     context = {
         'subreddit': subreddit,
         'subreddits': subreddits,
@@ -34,6 +36,7 @@ def subreddit_view(request, title, sort_by):
         'subreddit_filter': subreddit_filter,
         'search_subreddits': search_subreddits
         }
+
     return render(request, 'subreddit/subreddit.html', context)
 
 
